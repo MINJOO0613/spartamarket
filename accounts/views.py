@@ -40,7 +40,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return redirect("index")
+            return redirect("index")        #로그인으로 바꾸면 좋을 듯
     else:
         form = CustomUserCreationForm()
     context = {"form": form}
