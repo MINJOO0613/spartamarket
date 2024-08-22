@@ -12,5 +12,3 @@ urlpatterns = [
     path('<int:pk>/update/', views.update, name='update')
     # path('popup/', popup_view, name='popup_view'),
 ]
-
-#나도 기여할래..
