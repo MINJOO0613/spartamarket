@@ -3,23 +3,16 @@
 
 {% block content %}
 
-<h1>We are Quite market</h1>
-<h3>What is your favorite?</h3>
+<h1>We are Quite market !</h1>
 
 <img src="{% static 'products/*' %}">
 
 <br>
-<br>
 
-<a href="{% url 'products:create' %}">
-    <button>상품 등록</button>
-</a>
-
-<br>
 
 {% if request.user.is_authenticated %}
 <a href="{% url 'products:create' %}">
-    <button>새로운 글 작성</button>
+    <button>상품 등록</button>
 </a>
 <hr>
 
@@ -29,16 +22,37 @@
     </a>
 
 {% endif %}
+<br><br>
+
+<style>
+    .product {
+        width: 100%;
+        object-fit        
+    }
+
+    .image-box {
+        width: 380px;
+        height: 220px;
+        overflow: hidden;
+    }
+</style>
 
 
 {% for product in products %}
 
 <a href="{% url 'products:product_detail' product.pk %}">
-    <p>{{ product.title }}</p>
+    {% if product.image %}
+    <div class="image-box">
+        <img src="{{ product.image.url }}" class='product'>
+    </div>
+    {% endif %}
+    <h2>{{ product.author.username }} | {{ product.title }}</h2>
+    <p>{{ product.created_at }}</p>
+    
 
 </a>
 
-<hr>
+<hr><br>
 {% endfor %}
 
 
