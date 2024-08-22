@@ -2,9 +2,9 @@ from django import forms
 from .models import Article, Comment
 
 
-class ArticleForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = Article
+        model = Product
         fields = "__all__"
         exclude = ("created_at", "updated_at")
 
