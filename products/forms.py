@@ -1,5 +1,5 @@
 from django import forms
-from .models import Article, Comment
+from .models import Product, Comment
 
 
 class ProductForm(forms.ModelForm):
@@ -12,4 +12,4 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = "__all__"
-        exclude = ("article",)
+        exclude = ("product",)

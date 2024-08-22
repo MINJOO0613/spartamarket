@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<!-- # 상품 판매자가 올린 미디어(이미지)파일을 띄우기 -->
+
+
+<p>제목: {{ product.title }}</p>
+<p>설명: {{ product.content }}</p>
+<p>작성일시: {{ product.created_at }}</p>
+<p>수정일시: {{ product.updated_at }}</p>
+
+<a href="{% url 'index' %}">목록보기</a>
+<a href="{% url 'products:update' product.pk %}">수정하기</a><br><br>
+
+<form action="{% url 'products:delete' product.pk %}", method="POST">
+    {% csrf_token %}
+    <input type="submit" value="삭제">
+</form>
+
+{% endblock content %}

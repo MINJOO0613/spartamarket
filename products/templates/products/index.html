@@ -9,6 +9,15 @@
 <img src="{% static "products/*" %}">
 
 
+{% for product in products %}
+
+    <a href="{% url "products:product_detail" product.pk %}">
+        <p>{{ product.title }}</p>
+
+    </a>
+
+    <hr>
+{% endfor %}
 
 
 {% endblock content %}
