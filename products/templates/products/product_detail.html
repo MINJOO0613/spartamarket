@@ -8,9 +8,11 @@
 
 <p>제목: {{ product.title }}</p>
 <p>설명: {{ product.content }}</p>
+<br>
 <p>작성일시: {{ product.created_at }}</p>
 <p>수정일시: {{ product.updated_at }}</p>
 
+<br>
 <a href="{% url 'index' %}">목록보기</a>
 <a href="{% url 'products:update' product.pk %}">수정하기</a><br><br>
 

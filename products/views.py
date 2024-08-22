@@ -6,15 +6,16 @@ from .models import Product
 
 # Create your views here.
 def index(request):
-    products = Product.objects.all().order_by('-pk')  #나중에 정렬 바꿔
-    context = {"products":products}
+    products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
+    context = {"products": products}
     return render(request, "products/index.html", context)
+
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     # comment_form은 나중에 할고임
     context = {
-        "product":product,
+        "product": product,
     }
     return render(request, "products/product_detail.html", context)
 
@@ -29,24 +30,28 @@ def create(request):
     else:
         form = ProductForm()
 
-    context = {"form":form}
+    context = {"form": form}
     return render(request, "products/create.html", context)
 
 
-def update(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    if request.method == "POST":
-        form = ProductForm(request.POST, instance=product)
-        if form.is_valid():
-            product = form.save()
-            return redirect("products:product_detail", product.pk)
-    else:
-        form = ProductForm(instance=product)
-    context = {
-        "form": form,
-        "product": product,
-    }
-    return render(request, "products/update.html", context)
+def update(request, pk, ):
+    if request.user.is_authenticated:
+        #게시물을 등록한 유저가 일치한지 확인
+        
+        product = get_object_or_404(Product, pk=pk)
+        if request.method == "POST":
+            form = ProductForm(request.POST, instance=product)
+            if form.is_valid():
+                product = form.save()
+                return redirect("products:product_detail", product.pk)
+        else:
+            form = ProductForm(instance=product)
+        context = {
+            "form": form,
+            "product": product,
+        }
+        return render(request, "products/update.html", context)
+    return redirect("index")
 
 
 @require_POST
