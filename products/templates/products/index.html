@@ -6,17 +6,27 @@
 <h1>We are Quite market</h1>
 <h3>What is your favorite?</h3>
 
-<img src="{% static "products/*" %}">
+<img src="{% static 'products/*' %}">
+
+<br>
+<br>
+
+<a href="{% url 'products:create' %}">
+    <button>상품 등록</button>
+</a>
+
+<br>
+<br>
 
 
 {% for product in products %}
 
-    <a href="{% url "products:product_detail" product.pk %}">
-        <p>{{ product.title }}</p>
+<a href="{% url 'products:product_detail' product.pk %}">
+    <p>{{ product.title }}</p>
 
-    </a>
+</a>
 
-    <hr>
+<hr>
 {% endfor %}
 
 
