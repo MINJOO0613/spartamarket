@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1><strong>We are Quite market!</strong></h1>
-<p>What is your favortie?</p>
+<p>What is your favorite?</p>
 
 <img src="{% static 'products/*' %}">
 
@@ -17,46 +17,72 @@
 </a>
 {% else %}
 <a href="{% url 'accounts:login' %}">
-    <button>상품 등록</button>
+    <button>로그인 후 상품 등록</button>
 </a>
 {% endif %}
 <hr>
 
 
 <br><br><br>
-<h1 style = "text-align: center;"><strong>Products</strong></h1>
+<h1 style="text-align: center;"><strong>Products</strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for product in products %}
-        <div class="col">
-        <a href="{% url 'products:product_detail' product.pk %}">
-        <div class="card shadow-sm">
-            
-            {% if product.image %}
-            <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width="100%"; height="225px";"> 
-            {% else %}
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            {% endif %}
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+            <div class="col">
+                <a href="{% url 'products:product_detail' product.pk %}">
+                    <div class="card shadow-sm">
 
-            <div class="card-body">
-              <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{ product.title }}</font></font></p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button>
-                </div>
-                <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9분</font></font></small>
-              </div>
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width=" 100%";
+                            height="225px" ;">
+                        {% else %}
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                            xmlns="http://www.w3.org/2000/svg" role="img" aria-label="플레이스홀더: 썸네일"
+                            preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                                dy=".3em">Thumbnail</text>
+                        </svg>
+                        {% endif %}
+
+                        <div class="card-body">
+                            <p class="card-text">
+                                <font style="vertical-align: inherit;">
+                                    <font style="vertical-align: inherit;"><strong>{{ product.author.username
+                                            }}</strong> | {{ product.title }}</font>
+                                </font>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                        onclick="event.stopPropagation();">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">보다</font>
+                                        </font>
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary"
+                                        onclick="event.stopPropagation();">
+                                        <font style="vertical-align: inherit;">
+                                            <font style="vertical-align: inherit;">편집하다</font>
+                                        </font>
+                                    </button>
+                                </div>
+                                <small class="text-body-secondary">
+                                    <font style="vertical-align: inherit;">
+                                        <font style="vertical-align: inherit;">9분</font>
+                                    </font>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
-          </div>
-        </a>
+            {% endfor %}
         </div>
-        {% endfor %}
-      </div>
     </div>
-  </div>
+</div>
 
 
 
