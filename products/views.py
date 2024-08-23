@@ -3,6 +3,7 @@ from .models import Product
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
+from django.http import HttpResponseRedirect
 
 
 def index(request):
@@ -91,5 +92,5 @@ def like(request, pk):
             product.like_users.remove(request.user)
         else:
             product.like_users.add(request.user)
-        return redirect("products:index")
+        return redirect(request.META.get('HTTP_REFERER', 'products:index'))
     return redirect("accounts:login")

@@ -8,12 +8,14 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = [
-            UserCreationForm.Meta.fields,
+            "username",
+            "last_name",
+            "first_name",
+            "email",
         ]
-                  
 
-    def __init__(self, request=None, *args, **kwargs):
-        super(CustomUserCreationForm, self).__init__(*args, **kwargs) # 꼭 있어야 한다!
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs) # 꼭 있어야 한다!
         self.fields['username'].label = '아이디'
 
 
@@ -22,13 +24,15 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = [
-            "first_name",
+            "username",
             "last_name",
+            "first_name",
             "email",
         ]
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs) # 꼭 있어야 한다!
+        self.fields['username'].label = '아이디'
 
         # 비밀번호 변경
         if self.fields.get("password"):
