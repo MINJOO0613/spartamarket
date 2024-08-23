@@ -6,7 +6,11 @@
     <form action="{% url 'accounts:update' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+<<<<<<< HEAD
+        <button type="submit">수정완료</button>
+=======
         <button type="submit">회원 정보 수정</button>
+>>>>>>> 705d3abc0fc4a97cd9eb6810e53b4178f67c7a67
     </form>
 
 {% endblock content %}
