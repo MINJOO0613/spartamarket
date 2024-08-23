@@ -19,14 +19,18 @@
 <a href="{% url 'accounts:login' %}">
 
 <button>로그인 후 상품 등록</button>
-
 </a>
 {% endif %}
 <hr>
 
-<h1>Total Likes: {{ total_likes }}</h1>
+<select onchange="location = this.value;">
+    <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+    <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
+</select>
+
+{% comment %} <h1>Total Likes: {{ total_likes }}</h1>
 <a href="?sort=likes">인기순</a>
-<a href="?sort=created">최신순</a>
+<a href="?sort=created">최신순</a> {% endcomment %}
 
 
 <br><br><br>
@@ -63,7 +67,7 @@
                     </form></font></font></button>
                     <li>{{ product.name }} {{ product.total_likes }} likes</li>
                 </div>
-                <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9분</font></font></small>
+                <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font></font></small>
               </div>
             </div>
           </div>
