@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Product, Comment
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
@@ -30,9 +30,12 @@ def index(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    # comment_form은 나중에 할고임
+    comment_form = CommentForm()
+    comments = product.comments.all().order_by("-pk")
     context = {
         "product": product,
+        "comment_form": comment_form,
+        "comments": comments,
     }
     return render(request, "products/product_detail.html", context)
 
@@ -82,6 +85,27 @@ def delete(request, pk):
     if product.author == request.user:
         product.delete()
     return redirect("index")
+
+
+@require_POST
+def comment_create(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.product = product
+        comment.user = request.user
+        comment.save()
+        return redirect("products:product_detail", product.pk)
+
+
+@require_POST
+def comment_delete(request, pk, comment_pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=comment_pk)
+        if comment.user == request.user:
+            comment.delete()
+    return redirect("products:product_detail", pk)
 
 
 @require_POST

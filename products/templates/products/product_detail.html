@@ -14,7 +14,6 @@
 <p><strong>{{ product.author.username }}</strong> | {{ product.title }}</p>
 <p>{{ product.content }}</p>
 <p>{{ product.created_at|timesince }} 전</p>
-<p>{{ product.created_at }}</p>
 <p>{{ product.updated_at }}</p>
 
 <form action ="{% url "products:like" product.pk %}" method="POST">
@@ -40,6 +39,38 @@
 </form>
 
 {% endif %}
+
+{% if request.user.is_authenticated %}
+<br>
+<hr>
+<div>
+<h3>댓글 {{ comments|length }}개</h3><br>
+<form action="{% url "products:comment_create" product.pk %}" method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <input type="submit" value="댓글작성">
+</form>
+</div>
+{% endif %}
+
+{% for comment in comments %}
+<ul>
+    <li><strong>{{ comment.user.username }} | </strong>{{ comment.content }} </li>
+
+    {% if user == comment.user %}
+    <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+    </form>
+    {% endif %}
+    
+</ul>
+
+{% empty %}
+<br><br>
+<p>댓글이 없습니다.</p>
+
+{% endfor %}
 
 
 {% endblock content %}

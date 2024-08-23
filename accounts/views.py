@@ -61,12 +61,14 @@ def update(request):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
+            form.save()
             return redirect("index")
     
     else:
         form = CustomUserChangeForm(instance=request.user)
-    context = {"form": form}
+    context = {
+        "form": form,
+        }
     return render(request, "accounts/update.html", context)
 
 

@@ -4,7 +4,7 @@ from django.conf import settings
 
 # Create your models here.
 class User(AbstractUser):
-    pass
+    image = models.ImageField(upload_to="images/", blank=True)
 
 
 class Profile(models.Model):
