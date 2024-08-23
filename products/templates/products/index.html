@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1><strong>We are Quite market!</strong></h1>
-<p>What is your favortie?</p>
+<p>What is your favorite?</p>
 
 <img src="{% static 'products/*' %}">
 
@@ -13,18 +13,28 @@
 
 {% if request.user.is_authenticated %}
 <a href="{% url 'products:create' %}">
-    <button>상품 등록</button>
+<button>상품 등록</button>
 </a>
 {% else %}
 <a href="{% url 'accounts:login' %}">
-    <button>상품 등록</button>
+
+<button>로그인 후 상품 등록</button>
 </a>
 {% endif %}
 <hr>
 
+<select onchange="location = this.value;">
+    <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+    <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
+</select>
+
+{% comment %} <h1>Total Likes: {{ total_likes }}</h1>
+<a href="?sort=likes">인기순</a>
+<a href="?sort=created">최신순</a> {% endcomment %}
+
 
 <br><br><br>
-<h1 style = "text-align: center;"><strong>Products</strong></h1>
+<h1 style = "text-align: center;"><strong>- Products -</strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
@@ -44,10 +54,20 @@
               <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{ product.title }}</font></font></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button>
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button> {% endcomment %}
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                            <input type = "submit" value="좋아요 취소">
+                        {% else %}
+                            <input type = "submit" value="좋아요">
+                        {% endif %}
+                    </form></font></font></button>
+                    <li>{{ product.name }} {{ product.total_likes }} likes</li>
                 </div>
-                <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9분</font></font></small>
+                <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font></font></small>
               </div>
             </div>
           </div>
