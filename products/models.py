@@ -12,9 +12,14 @@ class Product(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="Like_products")
 
     def __str__(self):
         return self.title
+    
+    @property
+    def total_likes(self):
+        return self.like_users.count()
     
 
 class Comment(models.Model):
