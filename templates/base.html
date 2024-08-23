@@ -98,7 +98,7 @@
         }
 
         a {
-        text-decoration: none;
+            text-decoration: none;
         }
     </style>
     {% block titlename %}
@@ -319,33 +319,36 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 {% if request.user.is_authenticated %}
-                                <li>
-                                    <form action="{% url 'accounts:logout' %}" method="POST">
-                                        {% csrf_token %}
-                                        <input class="dropdown-item" type="submit" value="로그아웃"></input>
-                                    </form>
-                                </li>
-                                <li>
-                                    <form action="{% url 'accounts:delete' %}" method="post"><!-- 회원탈퇴 url -->
-                                        {% csrf_token %}
-                                        <input class="dropdown-item" type="submit" value="회원탈퇴">
-                                    </form>
-                                </li>
+                                <form action="{% url 'accounts:logout' %}" method="POST"
+                                    onsubmit="return confirm('정말 나가시겠습니까?')">
+                                    {% csrf_token %}
+                                    <input class="dropdown-item" type="submit" value="로그아웃">
+                                </form>
+                                {% endif %}
+
+
+                                {% if request.user.is_authenticated %}
+                                <form action="{% url 'accounts:delete' %}" method="POST"
+                                    onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+                                    {% csrf_token %}
+                                    <input class="dropdown-item" type="submit" value="회원탈퇴">
+                                </form>
                                 {% else %}
                                 <li><a class="dropdown-item" href="{% url 'accounts:login'%}">로그인</a></li>
                                 <li><a class="dropdown-item" href="{% url 'accounts:signup'%}">회원가입</a></li>
                                 {% endif %}
+                                
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-                                {% comment %} {% if request.user.is_authenticated %}
-                                <a href="{% url 'accounts:update' %}">
-                                    <button>회원정보수정</button>
-                                </a>
-                                {% endif %} {% endcomment %}
+        {% comment %} {% if request.user.is_authenticated %}
+        <a href="{% url 'accounts:update' %}">
+            <button>회원정보수정</button>
+        </a>
+        {% endif %} {% endcomment %}
 
     </header>
     <!-- <div class="container-fluid pb-3">
