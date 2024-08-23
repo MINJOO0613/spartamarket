@@ -22,10 +22,12 @@
 {% if user == product.author %}
 <a href="{% url 'products:update' product.pk %}">수정하기</a>
 <br><br>
+
 <form action="{% url 'products:delete' product.pk %}" method="POST">
-  {% csrf_token %}
-  <input type="submit" value="삭제" />
+    {% csrf_token %}
+    <input type="submit" value="삭제" onclick="return confirm('정말 삭제하시겠습니까?')">
 </form>
+
 {% endif %}
 
 
