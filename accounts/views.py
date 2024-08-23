@@ -11,6 +11,7 @@ from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
 
+
 @require_http_methods(["GET", "POST"])
 def login(request):
     if request.method == "POST":
@@ -81,3 +82,9 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     context = {"form": form}
     return render(request, "accounts/change_password.html", context)
+
+
+
+# def people(request, username): # urls.py에서 넘겨준 인자를 username으로 받는다.
+# 	    person = get_object_or_404(get_user_model(), username=username)
+#     return render(request, 'accounts/people.html', {"person": person})

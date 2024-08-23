@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1><strong>We are Quite market!</strong></h1>
-<p>What is your favortie?</p>
+<p>What is your favorite?</p>
 
 <img src="{% static 'products/*' %}">
 
@@ -13,18 +13,18 @@
 
 {% if request.user.is_authenticated %}
 <a href="{% url 'products:create' %}">
-    <button>상품 등록</button>
+<button>상품 등록</button>
 </a>
 {% else %}
 <a href="{% url 'accounts:login' %}">
-    <button>상품 등록</button>
+<button>로그인 후 상품 등록</button>
 </a>
 {% endif %}
 <hr>
 
 
 <br><br><br>
-<h1 style = "text-align: center;"><strong>Products</strong></h1>
+<h1 style = "text-align: center;"><strong>- Products -</strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
