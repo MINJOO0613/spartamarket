@@ -12,6 +12,7 @@ urlpatterns = [
     path('<int:pk>/update/', views.update, name='update'),
 
     path("<int:pk>/like", views.like, name="like"),
+    # 추가 url 생각해보기
 
     # path('popup/', popup_view, name='popup_view'),
 ]
