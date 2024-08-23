@@ -17,10 +17,13 @@
 </a>
 {% else %}
 <a href="{% url 'accounts:login' %}">
-    <button>상품 등록</button>
 </a>
 {% endif %}
 <hr>
+
+<h1>Total Likes: {{ total_likes }}</h1>
+<a href="?sort=likes">인기순</a>
+<a href="?sort=created">최신순</a>
 
 
 <br><br><br>
@@ -44,8 +47,18 @@
               <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{ product.title }}</font></font></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button>
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button> {% endcomment %}
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                            <input type = "submit" value="좋아요 취소">
+                        {% else %}
+                            <input type = "submit" value="좋아요">
+                        {% endif %}
+                    </form></font></font></button>
+                    <li>{{ product.name }} {{ product.total_likes }} likes</li>
                 </div>
                 <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9분</font></font></small>
               </div>
