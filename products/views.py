@@ -8,10 +8,8 @@ from django.views.decorators.http import require_POST, require_http_methods
 
 
 def index(request):
-    products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
-    context = {
-        "products": products
-    }
+    products = Product.objects.all().order_by("-pk")  # 나중에 정렬 바꿔
+    context = {"products": products}
     return render(request, "products/index.html", context)
 
 
