@@ -3,7 +3,8 @@
 
 {% block content %}
 
-<h1>We are Quite market !</h1>
+<h1><strong>We are Quite market!</strong></h1>
+<p>What is your favortie?</p>
 
 <img src="{% static 'products/*' %}">
 
@@ -14,16 +15,19 @@
 <a href="{% url 'products:create' %}">
     <button>상품 등록</button>
 </a>
-<hr>
 {% else %}
 <a href="{% url 'accounts:login' %}">
     <button>상품 등록</button>
 </a>
 {% endif %}
+<hr>
 
+
+<br><br><br>
+<h1 style = "text-align: center;"><strong>Products</strong></h1>
+<br><br>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for product in products %}
         <div class="col">
@@ -40,8 +44,8 @@
               <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{ product.title }}</font></font></p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
-                  <button type="button" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button>
                 </div>
                 <small class="text-body-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9분</font></font></small>
               </div>

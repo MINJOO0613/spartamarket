@@ -8,12 +8,12 @@
     {% csrf_token %}
 
     {{ form.as_p }}
-
+    <br>
     <button type="submit">저장</button>
 
 </form>
 
-
+<br><br>
 <head>
     <a href="{% url 'products:index' %}" onclick="return confirm('정말 취소하시겠습니까?')">취소</a>
 </head>
