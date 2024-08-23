@@ -7,7 +7,13 @@ from django.urls import reverse
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
-        fields = UserCreationForm.Meta.fields
+        fields = [
+            'User_ID',
+            "first_name",
+            "last_name",
+            "email",
+        ]
+
 
 
 #회원정보수정
@@ -15,6 +21,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = [
+            'username',
             "first_name",
             "last_name",
             "email",
