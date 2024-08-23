@@ -3,28 +3,15 @@ from .models import Product
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
-from django.http import HttpResponseRedirect
+
+# Create your views here.
 
 
 def index(request):
-    # products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
-    # context = {
-    #     "products": products
-    # }
-    # return render(request, "products/index.html", context)
-    sort_by = request.GET.get('sort', 'created')
-    
-    if sort_by == 'likes':
-        products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)
-    else:
-        products = Product.objects.all().order_by('-id')  # 기본적으로 생성순 정렬
-
-    total_likes = sum(product.total_likes for product in Product.objects.all())
+    products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
     context = {
-        'total_likes': total_likes,
         "products": products
     }
-
     return render(request, "products/index.html", context)
 
 
@@ -82,15 +69,3 @@ def delete(request, pk):
     if product.author == request.user:
         product.delete()
     return redirect("index")
-
-
-@require_POST
-def like(request, pk):
-    if request.user.is_authenticated:
-        product = get_object_or_404(Product, pk=pk)
-        if product.like_users.filter(pk=request.user.pk).exists():
-            product.like_users.remove(request.user)
-        else:
-            product.like_users.add(request.user)
-        return redirect(request.META.get('HTTP_REFERER', 'products:index'))
-    return redirect("accounts:login")

@@ -1,8 +1,5 @@
 from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
-
 
 app_name = "accounts"
 urlpatterns = [
@@ -12,8 +9,4 @@ urlpatterns = [
     path("delete/", views.delete, name="delete"),
     path("update/", views.update, name="update"),
     path("password/", views.change_password, name="change_password"),
-    # path('<str:username>/myproducts', views.people, name="people"),
 ]
-
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
