@@ -4,8 +4,6 @@ from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 
-# Create your views here.
-
 
 def index(request):
     # products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
@@ -25,6 +23,7 @@ def index(request):
         'total_likes': total_likes,
         "products": products
     }
+
     return render(request, "products/index.html", context)
 
 
