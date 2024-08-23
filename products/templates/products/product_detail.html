@@ -1,19 +1,22 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} 
+
+{% block content %}
 
 <!-- # 상품 판매자가 올린 미디어(이미지)파일을 띄우기 -->
-{% if product.image %}
-<img src="{{ product.image.url }}" />
-{% endif %}
 
 <hr>
-<p>제목: {{ product.title }}</p>
-<p>작성자: {{ product.author.username }}</p>
-<p>설명: {{ product.content }}</p>
-<br />
-<p>작성일시: {{ product.created_at }}</p>
-<p>수정일시: {{ product.updated_at }}</p>
+<br><br>
 
-<br />
+{% if product.image %}
+<img src="{{ product.image.url }}">
+{% endif %}
+
+<p><strong>{{ product.author.username }}</strong> | {{ product.title }}</p>
+<p>{{ product.content }}</p>
+<p>{{ product.created_at }}</p>
+<p>{{ product.updated_at }}</p>
+
+<br>
 <a href="{% url 'index' %}">목록보기</a>
 
 {% if user == product.author %}
