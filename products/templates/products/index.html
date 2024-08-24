@@ -79,7 +79,7 @@
                   <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();">
                     <font style="vertical-align: inherit;">
                       <font style="vertical-align: inherit;">
-                        <form action="{% url " products:like" product.pk %}" method="POST">
+                        <form action="{% url "products:like" product.pk %}" method="POST">
                           {% csrf_token %}
                           {% if request.user in product.like_users.all %}
                           <input type="submit" value="좋아요 취소">
