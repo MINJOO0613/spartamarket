@@ -14,11 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script type="module">
-        import { Toast } from 'bootstrap.esm.min.js'
-        Array.from(document.querySelectorAll('.toast'))
-            .forEach(toastNode => new Toast(toastNode))
-    </script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -258,34 +254,17 @@
     <header class="py-3 mb-3 border-bottom">
         <div class="row g-0 text-center" style="margin-left: 20px; margin-right: 15px;">
             <div class="col-8">
-                <div class="dropdown">
-                    <a href="#"
-                        class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg class="bi me-2" width="40" height="32">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
+                <div class="">
+                    <a href="/" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                        <img class="me-2 "src="http://localhost:8000/static/css/002.png" style="width: 100px">
                     </a>
-                    <ul class="dropdown-menu text-small shadow">
-                        <li><a class="dropdown-item active" href="#" aria-current="page">Overview</a></li>
-                        <li><a class="dropdown-item"
-                                href="https://teamsparta.notion.site/b1f541f0549f4e7f9e07c9cc547f1ec6">Team Notion</a>
-                        </li>
-                        <li><a class="dropdown-item" href="https://spartacodingclub.kr/">sparta</a></li>
-                        <li><a class="dropdown-item" href="#">Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Reports</a></li>
-                        <li><a class="dropdown-item" href="#">Analytics</a></li>
-                    </ul>
                 </div>
             </div>
             <div class="col-4">
                 <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
                     <div class="d-flex align-items-center" style="margin-left: 250px;">
-                        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                        <form action="./" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+                            <input type="search" name="s" class="form-control" placeholder="Search..." aria-label="Search">
                         </form>
 
                         <div class="dropdown text-end">
@@ -368,15 +347,12 @@
     </div>
 
 
-
-    <!-- footer -->
+    <footer>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
+                    <img class="me-2 "src="http://localhost:8000/static/css/001.png" style="width: 60px">
                 </a>
                 <span class="mb-3 mb-md-0 text-body-secondary"><strong>© Quite_makret.Corp</strong> </span>
             </div>
@@ -392,7 +368,7 @@
                             <use xlink:href="#facebook"></use>
                         </svg></a></li>
             </ul>
-        </footer>
+    </footer>
     </div>
 
 </body>

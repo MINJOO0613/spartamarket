@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br>
     <h1>회원가입</h1>
     <br><br>
 
@@ -9,7 +9,7 @@
         {% csrf_token %}
         {{ form.as_p }}
         <br><br>
-        <button class="btn btn-primary w-100 py-2" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">회원가입</font></font></button>
+        <button class="btn btn-outline-secondary" type="button"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>회원가입</strong></font></font></button>
     </form>
 
 {% endblock content %}

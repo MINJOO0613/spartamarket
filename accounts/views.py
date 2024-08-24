@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
@@ -9,6 +9,8 @@ from django.views.decorators.http import require_POST, require_http_methods
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import update_session_auth_hash
 from .forms import CustomUserChangeForm, CustomUserCreationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 
 
@@ -85,8 +87,3 @@ def change_password(request):
     context = {"form": form}
     return render(request, "accounts/change_password.html", context)
 
-
-
-# def people(request, username): # urls.py에서 넘겨준 인자를 username으로 받는다.
-# 	    person = get_object_or_404(get_user_model(), username=username)
-#     return render(request, 'accounts/people.html', {"person": person})

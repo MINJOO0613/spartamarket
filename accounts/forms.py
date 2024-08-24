@@ -8,7 +8,6 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = get_user_model()
         fields = [
-            "image",
             "username",
             "last_name",
             "first_name",
@@ -18,7 +17,6 @@ class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = '아이디'
-        self.fields['image'].label = '프로필사진'
 
 
 # 회원정보수정
@@ -26,7 +24,6 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = get_user_model()
         fields = [
-            "image",
             "username",
             "last_name",
             "first_name",
@@ -36,7 +33,6 @@ class CustomUserChangeForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = '아이디'
-        self.fields['image'].label = '프로필사진'
 
         # 비밀번호 변경
         if self.fields.get("password"):
@@ -44,3 +40,4 @@ class CustomUserChangeForm(UserChangeForm):
                 "You can change the password " '<a href="{}">here</a>.'
             ).format(f"{reverse('accounts:change_password')}")
             self.fields["password"].help_text = password_help_text
+
