@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-  <h1>{{ user.username }}의 프로필</h1>
+<br><br><br><br><br><br><br><br>
+{% if user.profile.profile_image %}
+  <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지">
+{% endif %}
+  <br><br>
+  <h1>{{ user.username }}의 프로필</h1><br>
   <p>이메일: {{ user.email }}</p>
   <p>소개: {{ user.profile.description }}</p>
-  <p>닉네임: {{ user.profile.nickname }}</p>
+  <p>닉네임: {{ user.profile.nickname }}</p><br><br>
+
+
   
-  {% if user.profile.profile_image %}
-    <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지">
-  {% endif %}
 
 
 {% endblock %}

@@ -2,28 +2,28 @@
 
 {% block content %}
 
-<!-- # 상품 판매자가 올린 미디어(이미지)파일을 띄우기 -->
-
-<hr>
 <br><br>
 
 {% if product.image %}
 <img src="{{ product.image.url }}">
 {% endif %}
-
-<p><strong>{{ product.author.username }}</strong> | {{ product.title }}</p>
-<p>{{ product.content }}</p>
-<p>{{ product.created_at|timesince }} 전</p>
-<p>{{ product.updated_at }}</p>
+<br><br>
+<h4><strong>{{ product.author.username }}</strong> | {{ product.title }}</h4><br>
+<h5>{{ product.content }}</h5><br>
 
 <form action ="{% url "products:like" product.pk %}" method="POST">
   {% csrf_token %}
   {% if request.user in product.like_users.all %}
-      <input type = "submit" value="좋아요 취소">
+  <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
   {% else %}
-      <input type = "submit" value="좋아요">
+  <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
   {% endif %}
-</form></font></font></button>
+  <strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+</form>
+<br><br><br>
+<p>{{ product.created_at|timesince }} 전</p>
+<p>{{ product.updated_at }}</p>
+
 
 
 <br>
@@ -47,12 +47,12 @@
 <h3>댓글 {{ comments|length }}개</h3><br>
 <form action="{% url "products:comment_create" product.pk %}" method="POST">
     {% csrf_token %}
-    {{ comment_form.as_p }}
     <input type="submit" value="댓글작성">
+    {{ comment_form.as_p }}
 </form>
 </div>
 {% endif %}
-
+<hr>
 {% for comment in comments %}
 <ul>
     <li><strong>{{ comment.user.username }} | </strong>{{ comment.content }} </li>
