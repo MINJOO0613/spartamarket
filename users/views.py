@@ -16,9 +16,7 @@ def profile_view(request, username):
 def edit_profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
 
-    form = None
-
-    if user.username == request.user:
+    if user == request.user:
         if request.method == "POST":
             form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
             if form.is_valid():
@@ -26,7 +24,9 @@ def edit_profile(request, username):
                 return redirect('profile', username=request.user.username)
         else:
             form = ProfileForm(instance=request.user.profile)
-
+    
+    else:
+        return redirect("index")
     return render(request, 'users/edit_profile.html', {'form': form})
     
     # if request.method == 'POST':
