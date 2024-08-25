@@ -1,10 +1,69 @@
 {% extends 'base.html' %} 
 
+{% load custom_filters %}
 {% block content %}
 
-<br><br>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<div class="container">
+<div class="row">
+    <div class="col-lg-4 col-xl-4">
+        <div class="card-box text-center">
+            {% if user.profile.profile_image %}
+            <img src="{{ user.profile.profile_image.url }}" alt="profile-image" height="200" class="rounded-circle"style="width:200px;">
+            {% else %}
+            <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+            alt="profile-image" height="200" class="rounded-circle" style="width:200px;">
+            {% endif %}
+            <br><br>
+            <h4 class="mb-0">{{ product.author }}</h4>
+            <p class="text-muted">@{{ product.author }}</p>
 
-{% if product.image %}
+            {% if product.author == user.username %}
+            {% if is_following %}
+              <form action="{% url 'users:unfollow_user' user.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Unfollow</button>
+              </form>
+            {% else %}
+              <form action="{% url 'users:follow_user' user.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
+              </form>
+            {% endif %}
+          {% endif %}
+            {% comment %} <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button> {% endcomment %}
+
+            <div class="text-left mt-3">
+                <h4 class="font-13 text-uppercase">About Me :</h4>
+                <p class="text-muted font-13 mb-3">
+                    {{ user.profile.description }}
+                </p>
+            </div>
+
+            <ul class="social-list list-inline mt-3 mb-0">
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="fab fa-google"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="fab fa-github"></i></a>
+                </li>
+            </ul>
+        </div> <!-- end card-box -->
+
+        
+
+    </div> <!-- end col-->
+
+    <div class="col-lg-8 col-xl-8">
+        <div class="card-box">
+            {% if product.image %}
 <img src="{{ product.image.url }}">
 {% endif %}
 <br><br>
@@ -20,9 +79,8 @@
   {% endif %}
   <strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
 </form>
-<br><br><br>
-<p>{{ product.created_at|timesince }} 전</p>
-<p>{{ product.updated_at }}</p>
+<br>
+    <p>{{ product.updated_at|timesince }} 전</p>
 
 
 
@@ -35,42 +93,52 @@
 
 <form action="{% url 'products:delete' product.pk %}" method="POST">
     {% csrf_token %}
-    <input type="submit" value="삭제" onclick="return confirm('정말 삭제하시겠습니까?')">
+    <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"  onclick="return confirm('정말 삭제하시겠습니까?')"><font style="vertical-align: inherit;"><strong>삭제</strong></font></font></button>
 </form>
 
 {% endif %}
+        </div> <!-- end card-box-->
 
-{% if request.user.is_authenticated %}
-<br>
-<hr>
-<div>
-<h3>댓글 {{ comments|length }}개</h3><br>
-<form action="{% url "products:comment_create" product.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="댓글작성">
-    {{ comment_form.as_p }}
-</form>
+    </div> <!-- end col -->
 </div>
-{% endif %}
-<hr>
-{% for comment in comments %}
-<ul>
-    <li><strong>{{ comment.user.username }} | </strong>{{ comment.content }} </li>
-
-    {% if user == comment.user %}
-    <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST">
+</div>
+<div class="p-5  bg-body-tertiary rounded-3">
+    {% if request.user.is_authenticated %}
+    <br>
+    <hr>
+    <div>
+    <h3>댓글 {{ comments|length }}개</h3><br>
+    <form action="{% url "products:comment_create" product.pk %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="삭제">
+        {{ comment_form.as_p }} <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>입력</strong></font></font></button>
+        
     </form>
+    </div>
     {% endif %}
+    <hr>
+    {% for comment in comments %}
+    <ul>
+        <li><strong>{{ comment.user.username }} | </strong>{{ comment.content }} </li>
     
-</ul>
+        {% if user == comment.user %}
+        <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"  onclick="return confirm('정말 삭제하시겠습니까?')"><font style="vertical-align: inherit;"><strong>삭제</strong></font></font></button>
+        </form>
+        {% endif %}
+        
+    </ul>
+    
+    {% empty %}
+    <br><br>
+    <p>댓글이 없습니다.</p>
+    
+    {% endfor %}
+  </div>
 
-{% empty %}
-<br><br>
-<p>댓글이 없습니다.</p>
 
-{% endfor %}
+
+
 
 
 {% endblock content %}

@@ -3,7 +3,6 @@
 
 {% block content %}
 
-
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -34,8 +33,6 @@
 
 <br>
 
-
-
 {% if request.user.is_authenticated %}
 <a href="{% url 'products:create' %}">
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -51,6 +48,26 @@
 {% endif %}
 <hr>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr>
 <select onchange="location = this.value;">
   <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
   <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
@@ -59,7 +76,6 @@
 {% comment %} <h1>Total Likes: {{ total_likes }}</h1>
 <a href="?sort=likes">인기순</a>
 <a href="?sort=created">최신순</a> {% endcomment %}
-
 
 <br><br><br>
 <h1 style = "text-align: center"><strong>- Products -</strong></h1>
