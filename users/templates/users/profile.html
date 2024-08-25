@@ -2,6 +2,11 @@
 
 {% block content %}
 <br><br><br><br><br><br><br><br>
+  {% if request.user.profile == user.profile %}
+    <a href="{% url 'users:edit_profile' user.username %}">편집하기</a>
+  {% endif %}
+
+<br><br><br>
 {% if user.profile.profile_image %}
   <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지">
 {% endif %}
@@ -11,8 +16,24 @@
   <p>소개: {{ user.profile.description }}</p>
   <p>닉네임: {{ user.profile.nickname }}</p><br><br>
 
+  <p>팔로워: {{ user.profile.follower_set.count }}</p>
+  <p>팔로잉: {{ user.profile.following_set.count }}</p>
 
-  
+  <br><br>
+  {% if request.user.profile != user.profile %}
+    {% if is_following %}
+      <form action="{% url 'users:unfollow_user' user.username %}" method="post">
+        {% csrf_token %}
+        <button type="submit">언팔로우</button>
+      </form>
+    {% else %}
+      <form action="{% url 'users:follow_user' user.username %}" method="post">
+        {% csrf_token %}
+        <button type="submit">팔로우</button>
+      </form>
+    {% endif %}
+  {% endif %}
+
 
 
 {% endblock %}

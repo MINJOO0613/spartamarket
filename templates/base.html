@@ -277,7 +277,7 @@
                             <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 {% if request.user.is_authenticated %}
-                                <img src="{{ accounts.image.url }}" alt="mdo" height="32" class="rounded-circle"
+                                <img src="{{ users.image.url }}" alt="mdo" height="32" class="rounded-circle"
                                     style="width: 32px;">
                                 {% else %}
                                 <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -299,7 +299,7 @@
                                 {% endif %}
 
                                 {% if request.user.is_authenticated %}
-                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a></li>
+                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
                                 {% endif %}
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
