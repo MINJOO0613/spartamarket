@@ -77,20 +77,70 @@
 
   <ul class="nav nav-tabs tabs-alt justify-content-center">
     <li class="nav-item">
-      <a class="nav-link py-4 active" href="#">Posts</a>
+      <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
+          {% csrf_token %}
+          <input type="hidden" name="tab" value="posts">
+          <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'posts' or not request.POST.tab %}active{% endif %}">Posts</button>
+      </form>
     </li>
     <li class="nav-item">
-      <a class="nav-link py-4 " href="#">Likes</a>
+        <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
+            {% csrf_token %}
+            <input type="hidden" name="tab" value="likes">
+            <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'likes' %}active{% endif %}">Likes</button>
+        </form>
     </li>
-    <li class="nav-item">
-      <a class="nav-link py-4" href="#">Followers</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link py-4" href="#">Following</a>
-    </li>
-  </ul>
+    <!-- 다른 탭들... -->
+</ul>
 
+<h1 style="text-align: center"><strong>Products</strong></h1>
+<br><br>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+                <div class="col">
+                    <a href="{% url 'products:product_detail' product.pk %}">
+                        <div class="card shadow-sm">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px;">
+                            {% else %}
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                </svg>
+                            {% endif %}
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <form action="{% url 'products:like' product.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            {% if request.user in product.like_by.all %}
+                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-solid fa-heart"></i></button>
+                                            {% else %}
+                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-regular fa-heart"></i></button>
+                                            {% endif %}
+                                        </form>
+                                        <p><strong>{{ product.name }} - {{ product.total_likes }} likes</strong></p>
+                                    </div>
+                                    <small class="text-body-secondary">
+                                        {{ product.created_at|timesince }} 전
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
+
 
 {% comment %} <br><br><br><br><br><br><br><br>
   {% if request.user.profile == user.profile %}

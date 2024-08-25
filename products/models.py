@@ -12,7 +12,7 @@ class Product(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="Like_products")
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_products")
 
     def __str__(self):
         return self.title
@@ -23,13 +23,13 @@ class Product(models.Model):
     
 
 class Comment(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = "comments")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = "comments", blank=True, null=True)
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments", blank=True, null=True
     )
-    content = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    content = models.CharField(max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self):
         return self.content

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from products.models import Product
 from .models import Profile, Follow
 from .forms import ProfileForm
 from django.views.decorators.http import require_POST, require_http_methods
@@ -36,10 +37,23 @@ def profile_view(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     # is_following을 following_set으로 수정하여 제대로 참조
     is_following = Follow.objects.filter(follower=request.user.profile, followed=user.profile).exists()
-
+    products = Product.objects.filter(author=user)
+    
+    if request.method == 'POST':
+        tab = request.POST.get('tab')
+        if tab == 'posts':
+            products = Product.objects.filter(author=user)
+        elif tab == 'likes':
+            products = user.liked_products.all()
+        else:
+            products = Product.objects.filter(author=user)
+    else:
+        products = Product.objects.filter(author=user)
+    
     return render(request, 'users/profile.html', {
         'user': user,
-        'is_following': is_following
+        'is_following': is_following,
+        'products': products,
     })
 
 @login_required
