@@ -268,8 +268,9 @@
             <div class="col-4">
                 <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
                     <div class="d-flex align-items-center" style="margin-left: 250px;">
-                        <form action="./" method="get" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                            <input type="search" name="s" class="form-control" placeholder="Search..." aria-label="Search">
+                        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'search_app:searchResult' %}" method="get">
+                            {% csrf_token %}
+                            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q">
                         </form>
 
                         <div class="dropdown text-end">
@@ -290,13 +291,16 @@
                             </a>
                             <ul class="dropdown-menu text-small">
                                 {% if request.user.is_authenticated %}
-                                {% comment %} <li><a class="dropdown-item"
-                                        href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
+                                {% comment %} 
+                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
                                 </li> {% endcomment %}
                                 {% else %}
-                                <li><a class="dropdown-item" href="">Guest</a></li>
+                                {% comment %} <li><a class="dropdown-item" href="">Guest</a></li> {% endcomment %}
                                 {% endif %}
-                                {% comment %} <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">My Page</a></li> {% endcomment %}
+
+                                {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
