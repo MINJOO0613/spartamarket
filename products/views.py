@@ -12,14 +12,15 @@ def index(request):
     #     "products": products
     # }
     # return render(request, "products/index.html", context)
-    # sort_by = request.GET.get('sort', 'created')
+    sort_by = request.GET.get('sort', 'created')
     
-    # if sort_by == 'likes':
-    #     products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)
-    # else:
-    #     products = Product.objects.all().order_by('-id')  # 기본적으로 생성순 정렬
+    if sort_by == 'likes':
+        products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)
+    else:
+        products = Product.objects.all().order_by('-id')  # 기본적으로 생성순 정렬
 
-    # total_likes = sum(product.total_likes for product in Product.objects.all())
+    total_likes = sum(product.total_likes for product in Product.objects.all())
+    
     
     latest_products = Product.objects.all().order_by('-id')[:3]
     
@@ -27,6 +28,8 @@ def index(request):
     
     
     context = {
+        'products':products,
+        'total_likes':total_likes,
         'latest_products': latest_products,
         'popular_products': popular_products,
     }

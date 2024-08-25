@@ -65,7 +65,7 @@
 <hr>
 
 <br><br><br>
-<h1 style = "text-align: center"><strong> 🔥 </strong></h1>
+<h1 style = "text-align: center"><strong> Best Products </strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
@@ -123,15 +123,21 @@
   </div>
 </div>
 
+<br><br><br>
 <hr>
 
+<select onchange="location = this.value;">
+  <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
+  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+</select>
+
 <br><br><br>
-<h1 style = "text-align: center"><strong> 🆕 </strong></h1>
+<h1 style = "text-align: center"><strong> Products </strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {% for product in latest_products|slice:":3" %}
+      {% for product in products %}
       <div class="col">
         <a href="{% url 'products:product_detail' product.pk %}">
           <div class="card shadow-sm">
