@@ -49,25 +49,89 @@
   </div>
 </a>
 {% endif %}
-<hr>
 
-<select onchange="location = this.value;">
-  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+
+{% comment %} <select onchange="location = this.value;">
   <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
-</select>
+  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+</select> {% endcomment %}
 
 {% comment %} <h1>Total Likes: {{ total_likes }}</h1>
 <a href="?sort=likes">인기순</a>
 <a href="?sort=created">최신순</a> {% endcomment %}
 
 
+
+<hr>
+
 <br><br><br>
-<h1 style = "text-align: center"><strong>- Products -</strong></h1>
+<h1 style = "text-align: center"><strong> 🔥 </strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-      {% for product in products %}
+      {% for product in popular_products|slice:":3" %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width=" 100%";
+              height="225px" ;">
+            {% else %}
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+              role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                dy=".3em">Thumbnail</text>
+            </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}</font>
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button> {% endcomment %}
+                  
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<br><br><br>
+<h1 style = "text-align: center"><strong> 🆕 </strong></h1>
+<br><br>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for product in latest_products|slice:":3" %}
       <div class="col">
         <a href="{% url 'products:product_detail' product.pk %}">
           <div class="card shadow-sm">
