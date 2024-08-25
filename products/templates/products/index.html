@@ -24,8 +24,8 @@
 <hr>
 
 <select onchange="location = this.value;">
-  <option value="?sort=likes" {% if request.GET.sort =='likes' %}selected{% endif %}>인기순</option>
-  <option value="?sort=created" {% if request.GET.sort =='created' %}selected{% endif %}>최신순</option>
+  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+  <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
 </select>
 
 {% comment %} <h1>Total Likes: {{ total_likes }}</h1>
@@ -59,8 +59,7 @@
             <div class="card-body">
               <p class="card-text">
                 <font style="vertical-align: inherit;">
-                  <font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{
-                    product.title }}</font>
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}</font>
                 </font>
               </p>
               <div class="d-flex justify-content-between align-items-center">
