@@ -127,3 +127,5 @@ def like(request, pk):
             product.like_users.add(request.user)
         return redirect(request.META.get('HTTP_REFERER', 'products:index'))
     return redirect("accounts:login")
+
+
