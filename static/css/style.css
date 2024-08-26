@@ -317,3 +317,41 @@ body{
 .nav-tabs .nav-link.active {
     border-bottom-color: #fff;
 }
+
+.card-img-top {
+    width: 100%;
+    height: 300px; /* 원하는 높이로 설정하세요 */
+    object-fit: cover; /* 이미지가 잘리더라도 그리드 형식에 맞게 표시 */
+}  
+
+.card-body {
+    height: 140px; /* 카드 본문의 높이를 충분히 확보 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .card-text {
+    height: 60px; /* 텍스트 영역의 높이를 고정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 보여줄 줄 수 제한 */
+    -webkit-box-orient: vertical;
+    white-space: normal;
+  }
+  
+  .btn-group {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .no_outline_btn {
+    border: none;
+    background: none;
+    cursor: pointer; /* 클릭 가능한 버튼 느낌을 위해 추가 */
+  }
+  
+  .no_outline_btn i {
+    font-size: 1.7rem; /* 아이콘 크기를 조정 */
+  }
