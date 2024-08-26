@@ -15,7 +15,7 @@ class Product(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_products")
-    product_views = models.PositiveBigIntegerField(default=0)
+    # product_views = models.PositiveBigIntegerField(default=0)
 
     def __str__(self):
         return self.title

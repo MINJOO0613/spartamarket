@@ -77,18 +77,29 @@
 
   <ul class="nav nav-tabs tabs-alt justify-content-center">
     <li class="nav-item">
+      {% if request.user.is_authenticated and request.user.username == user.username %}      
       <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
           {% csrf_token %}
           <input type="hidden" name="tab" value="posts">
           <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'posts' or not request.POST.tab %}active{% endif %}">Posts</button>
       </form>
+      {% elif request.user.is_authenticated and request.user.username != user.username %}        
+      {% comment %} <form method="POST" action="{% url 'users:author_profile' username=product.user.username %}"> {% endcomment %}
+          {% csrf_token %}
+          <input type="hidden" name="tab" value="posts">
+          <p class="nav-link py-4">Posts</p>
+      </form>
+      {% endif %}
     </li>
     <li class="nav-item">
-        <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
+      {% if request.user.is_authenticated and request.user.username == user.username %}        
+      <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
             {% csrf_token %}
             <input type="hidden" name="tab" value="likes">
             <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'likes' %}active{% endif %}">Likes</button>
         </form>
+        {% elif request.user.is_authenticated and request.user.username == user.username %}      <p></p>
+      {% endif %}
     </li>
     <!-- 다른 탭들... -->
 </ul>
@@ -126,11 +137,15 @@
                                         <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
                                         {% endif %}
                                     </form>
+                                    {% if product.user == request.user %}
                                     <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                                     </div>
                                     <small class="text-body-secondary">
                                         {{ product.time_dif }}
                                     </small>
+                                    {% elif product.user != request.user %} 
+                                    <li></li> 
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
