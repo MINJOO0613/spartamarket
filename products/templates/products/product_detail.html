@@ -9,8 +9,8 @@
 <div class="row">
     <div class="col-lg-4 col-xl-4">
         <div class="card-box text-center">
-            {% if user.profile.profile_image %}
-            <img src="{{ user.profile.profile_image.url }}" alt="profile-image" height="200" class="rounded-circle"style="width:200px;">
+            {% if product.author.profile_image %}
+            <img src="{{ product.author.profile_image.url }}" alt="profile-image" height="200" class="rounded-circle"style="width:200px;">
             {% else %}
             <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
             alt="profile-image" height="200" class="rounded-circle" style="width:200px;">
@@ -21,12 +21,12 @@
 
             {% if product.author == user.username %}
             {% if is_following %}
-              <form action="{% url 'users:unfollow_user' user.username %}" method="post">
+              <form action="{% url 'users:unfollow_user' product.author.username %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Unfollow</button>
               </form>
             {% else %}
-              <form action="{% url 'users:follow_user' user.username %}" method="post">
+              <form action="{% url 'users:follow_user' product.author.username %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
               </form>
@@ -37,7 +37,7 @@
             <div class="text-left mt-3">
                 <h4 class="font-13 text-uppercase">About Me :</h4>
                 <p class="text-muted font-13 mb-3">
-                    {{ user.profile.description }}
+                    {{ product.author.profile.description }}
                 </p>
             </div>
 
