@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+<p>팔로워: {{ user.profile.follower_set.count }}</p>
+<p>팔로잉: {{ user.profile.following_set.count }}</p>
+{% block content %}
+<div class="bg-white">
+
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center py-4">
+      <div>
+        <a href="#" class="d-inline-block text-dark">
+          <strong>{{ user.profile.follower_set.count }}</strong>
+          <span class="text-muted">followers</span>
+        </a>
+        <a href="#" class="d-inline-block text-dark ml-3">
+          <strong>{{ user.profile.following_set.count }}</strong>
+          <span class="text-muted">following</span>
+        </a>
+      </div>
+      <div>
+        {% if request.user.profile != user.profile %}
+          {% if is_following %}
+            <form action="{% url 'users:unfollow_user' user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm">Unfollow</button>
+            </form>
+          {% else %}
+            <form action="{% url 'users:follow_user' user.username %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-sm">Follow</button>
+            </form>
+          {% endif %}
+        {% else %}
+          <a href="{% url 'users:edit_profile' user.username %}">편집하기</a>
+        {% endif %}
+        </a>
+        <a href="#" class="btn btn-default icon-btn md-btn-flat btn-sm ml-1">
+          <i class="ion ion-md-mail"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr class="m-0">
+
+  <div class="container">
+    <div class="text-center py-5">
+      {% if user.profile.profile_image %}
+      <img src="{{ user.profile.profile_image.url }}" alt="profile-image" height="200" class="rounded-circle"style="width:200px;">
+      {% else %}
+      <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+      alt="profile-image" height="200" class="rounded-circle" style="width:200px;">
+      {% endif %}
+
+      <div class="col-md-8 col-lg-6 col-xl-5 p-0 mx-auto">
+        <h4 class="font-weight-bold my-4">{{ user.username }}</h4>
+
+        <div class="text-muted mb-4">
+          <p>{{ user.email }}</p><br>
+          <p><strong>닉네임:</strong> {{ user.profile.nickname }}</p><br><br>
+          <p><strong>소개:</strong><br><br> {{ user.profile.description }}</p>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn icon-btn borderless btn-outline-twitter btn-lg btn-round">
+          <span class="ion ion-logo-twitter"></span>
+        </a>
+        <a href="#" class="btn icon-btn borderless btn-outline-facebook btn-lg btn-round">
+          <span class="ion ion-logo-facebook"></span>
+        </a>
+        <a href="#" class="btn icon-btn borderless btn-outline-instagram btn-lg btn-round">
+          <span class="ion ion-logo-instagram"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr class="m-0">
+
+  <ul class="nav nav-tabs tabs-alt justify-content-center">
+    <li class="nav-item">
+      <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
+          {% csrf_token %}
+          <input type="hidden" name="tab" value="posts">
+          <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'posts' or not request.POST.tab %}active{% endif %}">Posts</button>
+      </form>
+    </li>
+    <li class="nav-item">
+        <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
+            {% csrf_token %}
+            <input type="hidden" name="tab" value="likes">
+            <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'likes' %}active{% endif %}">Likes</button>
+        </form>
+    </li>
+    <!-- 다른 탭들... -->
+</ul>
+
+<h1 style="text-align: center"><strong>Products</strong></h1>
+<br><br>
+
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for product in products %}
+                <div class="col">
+                    <a href="{% url 'products:product_detail' product.pk %}">
+                        <div class="card shadow-sm">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width: 100%; height: 225px;">
+                            {% else %}
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                                    <title>Placeholder</title>
+                                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                                </svg>
+                            {% endif %}
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <form action="{% url 'products:like' product.pk %}" method="POST">
+                                            {% csrf_token %}
+                                            {% if request.user in product.like_by.all %}
+                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-solid fa-heart"></i></button>
+                                            {% else %}
+                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-regular fa-heart"></i></button>
+                                            {% endif %}
+                                        </form>
+                                        <p><strong>{{ product.name }} - {{ product.total_likes }} likes</strong></p>
+                                    </div>
+                                    <small class="text-body-secondary">
+                                        {{ product.created_at|timesince }} 전
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% comment %} <br><br><br><br><br><br><br><br>
+  {% if request.user.profile == user.profile %}
+    <a href="{% url 'users:edit_profile' user.username %}">편집하기</a>
+  {% endif %} {% endcomment %}
+
+{% comment %} <br><br><br>
+{% if user.profile.profile_image %}
+  <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지">
+{% endif %}
+  <br><br>
+  <h1>{{ user.username }}의 프로필</h1><br>
+  <p>이메일: {{ user.email }}</p>
+  <p>소개: {{ user.profile.description }}</p>
+  <p>닉네임: {{ user.profile.nickname }}</p><br><br>
+
+  <p>팔로워: {{ user.profile.follower_set.count }}</p>
+  <p>팔로잉: {{ user.profile.following_set.count }}</p>
+
+  <br><br>
+  {% if request.user.profile != user.profile %}
+    {% if is_following %}
+      <form action="{% url 'users:unfollow_user' user.username %}" method="post">
+        {% csrf_token %}
+        <button type="submit">언팔로우</button>
+      </form>
+    {% else %}
+      <form action="{% url 'users:follow_user' user.username %}" method="post">
+        {% csrf_token %}
+        <button type="submit">팔로우</button>
+      </form>
+    {% endif %}
+  {% endif %} {% endcomment %}
+
+
+
+{% endblock %}

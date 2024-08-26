@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
@@ -61,12 +61,14 @@ def update(request):
     if request.method == "POST":
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
+            form.save()
             return redirect("index")
     
     else:
         form = CustomUserChangeForm(instance=request.user)
-    context = {"form": form}
+    context = {
+        "form": form,
+        }
     return render(request, "accounts/update.html", context)
 
 
@@ -83,8 +85,3 @@ def change_password(request):
     context = {"form": form}
     return render(request, "accounts/change_password.html", context)
 
-
-
-# def people(request, username): # urls.py에서 넘겨준 인자를 username으로 받는다.
-# 	    person = get_object_or_404(get_user_model(), username=username)
-#     return render(request, 'accounts/people.html', {"person": person})

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from .models import Product, Comment
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
@@ -21,9 +21,18 @@ def index(request):
         products = Product.objects.all().order_by('-id')  # 기본적으로 생성순 정렬
 
     total_likes = sum(product.total_likes for product in Product.objects.all())
+    
+    
+    latest_products = Product.objects.all().order_by('-id')[:3]
+    
+    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:3]
+    
+    
     context = {
-        'total_likes': total_likes,
-        "products": products
+        'products':products,
+        'total_likes':total_likes,
+        'latest_products': latest_products,
+        'popular_products': popular_products,
     }
 
     return render(request, "products/index.html", context)
@@ -31,7 +40,8 @@ def index(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    # comment_form은 나중에 할고임
+    comment_form = CommentForm()
+    comments = product.comments.all().order_by("-pk")
 
     cookie_name = f'product_'
     if cookie_name not in request.COOKIES:
@@ -53,6 +63,8 @@ def product_detail(request, pk):
 
     context = {
         "product": product,
+        "comment_form": comment_form,
+        "comments": comments,
         # 'watched': watched,
         }
     return render(request, "products/product_detail.html", context)
@@ -80,7 +92,7 @@ def update(request, pk):
     product = get_object_or_404(Product, pk=pk)
     if product.author == request.user:  # 게시물을 등록한 유저가 일치한지 확인
         if request.method == "POST":
-            form = ProductForm(request.POST, instance=product)
+            form = ProductForm(request.POST, request .FILES, instance=product)
             if form.is_valid():
                 product = form.save()
                 return redirect("products:product_detail", product.pk)
@@ -106,6 +118,27 @@ def delete(request, pk):
 
 
 @require_POST
+def comment_create(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.product = product
+        comment.user = request.user
+        comment.save()
+        return redirect("products:product_detail", product.pk)
+
+
+@require_POST
+def comment_delete(request, pk, comment_pk):
+    if request.user.is_authenticated:
+        comment = get_object_or_404(Comment, pk=comment_pk)
+        if comment.user == request.user:
+            comment.delete()
+    return redirect("products:product_detail", pk)
+
+
+@require_POST
 def like(request, pk):
     if request.user.is_authenticated:
         product = get_object_or_404(Product, pk=pk)
@@ -115,3 +148,5 @@ def like(request, pk):
             product.like_users.add(request.user)
         return redirect(request.META.get('HTTP_REFERER', 'products:index'))
     return redirect("accounts:login")
+
+

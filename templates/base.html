@@ -14,11 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script type="module">
-        import { Toast } from 'bootstrap.esm.min.js'
-        Array.from(document.querySelectorAll('.toast'))
-            .forEach(toastNode => new Toast(toastNode))
-    </script>
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -99,6 +95,11 @@
 
         a {
             text-decoration: none;
+        }
+
+        .no_outline_btn {
+            background-color: white;
+            border: none;
         }
     </style>
     {% block titlename %}
@@ -256,29 +257,12 @@
     </svg>
 
     <header class="py-3 mb-3 border-bottom">
-        <div class="row g-0 text-center" style="margin-left: 20px; margin-right: 15px;">
+        <div class="row g-0 text-center" style="margin-left: 80px; margin-right: 500px;">
             <div class="col-8">
-                <div class="dropdown">
-                    <a href="#"
-                        class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg class="bi me-2" width="40" height="32">
-                            <use xlink:href="#bootstrap"></use>
-                        </svg>
+                <div class="">
+                    <a href="/" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
+                        <img class="me-2 "src="http://localhost:8000/static/css/BI_1.png" style="width: 100px">
                     </a>
-                    <ul class="dropdown-menu text-small shadow">
-                        <li><a class="dropdown-item active" href="#" aria-current="page">Overview</a></li>
-                        <li><a class="dropdown-item"
-                                href="https://teamsparta.notion.site/b1f541f0549f4e7f9e07c9cc547f1ec6">Team Notion</a>
-                        </li>
-                        <li><a class="dropdown-item" href="https://spartacodingclub.kr/">sparta</a></li>
-                        <li><a class="dropdown-item" href="#">Products</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Reports</a></li>
-                        <li><a class="dropdown-item" href="#">Analytics</a></li>
-                    </ul>
                 </div>
             </div>
             <div class="col-4">
@@ -293,8 +277,13 @@
                             <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 {% if request.user.is_authenticated %}
-                                <img src="https://github.com/mdo.png" alt="mdo" height="32" class="rounded-circle"
-                                    style="width: 32px;">
+                                    {% if user.profile.profile_image %}
+                                    <img src="{{ user.profile.profile_image.url }}" alt="mdo" height="32" class="rounded-circle"
+                                        style="width: 32px;">
+                                    {% else %}
+                                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+                                    alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
+                                    {% endif %}
                                 {% else %}
                                 <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
@@ -307,13 +296,16 @@
                             </a>
                             <ul class="dropdown-menu text-small">
                                 {% if request.user.is_authenticated %}
-                                {% comment %} <li><a class="dropdown-item"
-                                        href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
+                                {% comment %} 
+                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
                                 </li> {% endcomment %}
                                 {% else %}
-                                <li><a class="dropdown-item" href="">Guest</a></li>
+                                {% comment %} <li><a class="dropdown-item" href="">Guest</a></li> {% endcomment %}
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#">My Page</a></li>
+
+                                {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
+                                {% endif %}
                                 <li><a class="dropdown-item" href="#">Settings</a></li>
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 <li>
@@ -369,15 +361,12 @@
     </div>
 
 
-
-    <!-- footer -->
+    <footer>
     <div class="container">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24">
-                        <use xlink:href="#bootstrap"></use>
-                    </svg>
+                    <img class="me-2 "src="http://localhost:8000/static/css/BI_2.png" style="width: 60px">
                 </a>
                 <span class="mb-3 mb-md-0 text-body-secondary"><strong>© Quite_makret.Corp</strong> </span>
             </div>
@@ -389,11 +378,8 @@
                 <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
                             <use xlink:href="#instagram"></use>
                         </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24">
-                            <use xlink:href="#facebook"></use>
-                        </svg></a></li>
             </ul>
-        </footer>
+    </footer>
     </div>
 
 </body>

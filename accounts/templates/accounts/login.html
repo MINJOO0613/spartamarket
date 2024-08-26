@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>LOGIN</h1>
 
+
+    <br><br><br><br><br><br><br><br><br><br>
+    <h1>LOGIN</h1>
+    <br>
+      
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">로그인</button>
+        <br><br>
+        <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>로그인</strong></font></font></button>
     </form>
 
 {% endblock content %}

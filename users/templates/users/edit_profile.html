@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+
+{% block content %}
+
+<br><br><br><br><br><br><br><br>
+<h1>{{ user.username }}의 프로필</h1><br>
+
+<form action="{% url 'users:edit_profile' request.user.username %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <br><br>
+  <button type="submit">저장하기</button>
+
+</form>
+<br><br><br>
+<a href="{% url 'users:profile' user.username %}">이전으로</a>
+
+
+{% endblock %}

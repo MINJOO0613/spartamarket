@@ -3,24 +3,124 @@
 
 {% block content %}
 
-<h1><strong>We are Quite market!</strong></h1>
-<p>What is your favorite?</p>
-
-<img src="{% static 'products/*' %}">
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="http://localhost:8000/static/css/001.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/002.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/003.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/004.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/005.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
 <br>
 
-
 {% if request.user.is_authenticated %}
 <a href="{% url 'products:create' %}">
-  <button>상품 등록</button>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
+  </div>
 </a>
 {% else %}
 <a href="{% url 'accounts:login' %}">
-
-  <button>로그인 후 상품 등록</button>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-outline-secondary" type="submit"><strong>로그인 후 상품등록</strong></button>
+  </div>
 </a>
 {% endif %}
+
+
+{% comment %} <select onchange="location = this.value;">
+  <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
+  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+</select> {% endcomment %}
+
+{% comment %} <h1>Total Likes: {{ total_likes }}</h1>
+<a href="?sort=likes">인기순</a>
+<a href="?sort=created">최신순</a> {% endcomment %}
+
+
+
+<hr>
+
+<br><br><br>
+<h1 style = "text-align: center"><strong> Best Products </strong></h1>
+<br><br>
+<div class="album py-5 bg-body-tertiary">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for product in popular_products|slice:":3" %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width=" 100%";
+              height="225px" ;">
+            {% else %}
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+              role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                dy=".3em">Thumbnail</text>
+            </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                <font style="vertical-align: inherit;">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}} | 조회수: {{ product_detail.hits }}</font>
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button> {% endcomment %}
+                  
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br><br><br>
 <hr>
 
 <select onchange="location = this.value;">
@@ -28,13 +128,8 @@
   <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
 </select>
 
-{% comment %} <h1>Total Likes: {{ total_likes }}</h1>
-<a href="?sort=likes">인기순</a>
-<a href="?sort=created">최신순</a> {% endcomment %}
-
-
 <br><br><br>
-<h1 style="text-align: center;"><strong>- Products -</strong></h1>
+<h1 style = "text-align: center"><strong> Products </strong></h1>
 <br><br>
 <div class="album py-5 bg-body-tertiary">
   <div class="container">
@@ -64,32 +159,18 @@
               </p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary"
-                    onclick="event.stopPropagation();">
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">보다</font>
-                    </font>
-                  </button>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();">
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">편집하다</font>
-                    </font>
-                  </button> {% endcomment %}
-                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();">
-                    <font style="vertical-align: inherit;">
-                      <font style="vertical-align: inherit;">
-                        <form action="{% url "products:like" product.pk %}" method="POST">
-                          {% csrf_token %}
-                          {% if request.user in product.like_users.all %}
-                          <input type="submit" value="좋아요 취소">
-                          {% else %}
-                          <input type="submit" value="좋아요">
-                          {% endif %}
-                        </form>
-                      </font>
-                    </font>
-                  </button>
-                  <li>{{ product.name }} {{ product.total_likes }} likes</li>
+                  {% comment %} <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">보다</font></font></button>
+                  <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">편집하다</font></font></button> {% endcomment %}
+                  
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                 </div>
                 <small class="text-body-secondary">
                   <font style="vertical-align: inherit;">
