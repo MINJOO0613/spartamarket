@@ -295,22 +295,26 @@
                                 {% endif %}
                             </a>
                             <ul class="dropdown-menu text-small">
-                                {% if request.user.is_authenticated %}
-                                {% comment %} 
-                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
-                                </li> {% endcomment %}
-                                {% else %}
-                                {% comment %} <li><a class="dropdown-item" href="">Guest</a></li> {% endcomment %}
-                                {% endif %}
 
                                 {% if request.user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
+
+                                {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="{% url 'accounts:update' %}" method="POST">Settings</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
+                                {% else %}
+                                <li></li>
+                                {% endif %}
+                                {% comment %} {% if request.user.is_authenticated %}
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                
+                                {% else %}
+                                <li></li>
+                                {% endif %} {% endcomment %}
+                                
                                 {% if request.user.is_authenticated %}
                                 <form action="{% url 'accounts:logout' %}" method="POST"
                                     onsubmit="return confirm('정말 나가시겠습니까?')">
