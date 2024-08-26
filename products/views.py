@@ -24,7 +24,7 @@ def index(request):
     
     latest_products = Product.objects.all().order_by('-id')[:3]
     
-    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:3]
+    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:4]
     
     
     context = {

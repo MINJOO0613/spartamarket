@@ -41,26 +41,27 @@
                             <p class="card-text">
                             <font style="vertical-align: inherit;">
                                 <font style="vertical-align: inherit;"><strong>{{ product.author.username }}</strong> | {{product.title}}</font>
+                                <p>{{product.price}}0원</p>
                             </font>
                             </p>
                             </a>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <button type="submit" class="btn btn-sm btn-outline-secondary" onclick="event.stopPropagation();">
                                     <font style="vertical-align: inherit;">
                                         <font style="vertical-align: inherit;">
                                         <form action="{% url "products:like" product.pk %}" method="POST">
                                         {% csrf_token %}
-                                        {% if request.user in product.like_users.all %}
-                                        <input type="submit" value="좋아요 취소">
-                                        {% else %}
-                                        <input type="submit" value="좋아요">
-                                        {% endif %}
+                                            {% if request.user in product.like_users.all %}
+                                            <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                                            {% else %}
+                                            <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                                            {% endif %}
                                         </form>
                                     </font>
                                     </font>
                                 </button>
                                 <li>{{ product.name }} {{ product.total_likes }} likes</li>
+                                
                                 </div>
                                 <small class="text-body-secondary">
                                     <font style="vertical-align: inherit;">
@@ -69,7 +70,7 @@
                                 </small>
                             </div>
                     {% comment %} <h4>{{product.title}}</h4> {% endcomment %}
-                    <p>{{product.price}}999999999원</p>
+                    
                     </div>
                 </div>
             </div>
