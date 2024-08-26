@@ -256,13 +256,14 @@
 
                                 {% if request.user.is_authenticated %}
                                 <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li>
-                                {% endif %}
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                {% else %}
-                                <li></li>
                                 {% endif %}
+                                
+                                {% comment %} {% else %}
+                                <li></li>
+                                {% endif %} {% endcomment %}
                                 {% comment %} {% if request.user.is_authenticated %}
                                 <li><a class="dropdown-item" href="#">Profile</a></li>
                                 
