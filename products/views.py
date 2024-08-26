@@ -7,11 +7,6 @@ from django.http import HttpResponseRedirect
 
 
 def index(request):
-    # products = Product.objects.all().order_by('-pk')  # 나중에 정렬 바꿔
-    # context = {
-    #     "products": products
-    # }
-    # return render(request, "products/index.html", context)
     sort_by = request.GET.get('sort', 'created')
     
     if sort_by == 'likes':
@@ -20,12 +15,8 @@ def index(request):
         products = Product.objects.all().order_by('-id')  # 기본적으로 생성순 정렬
 
     total_likes = sum(product.total_likes for product in Product.objects.all())
-    
-    
-    latest_products = Product.objects.all().order_by('-id')[:3]
-    
-    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:3]
-    
+    latest_products = Product.objects.all().order_by('-id')[:4]
+    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:4]
     
     context = {
         'products':products,
@@ -33,7 +24,6 @@ def index(request):
         'latest_products': latest_products,
         'popular_products': popular_products,
     }
-
     return render(request, "products/index.html", context)
 
 

@@ -92,13 +92,13 @@
     </li>
     <!-- 다른 탭들... -->
 </ul>
-
-<h1 style="text-align: center"><strong>Products</strong></h1>
+<br><br><br>
+<h2 style="text-align: center"><strong>- Products -</strong></h2>
 <br><br>
 
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
             {% for product in products %}
                 <div class="col">
                     <a href="{% url 'products:product_detail' product.pk %}">
@@ -118,15 +118,15 @@
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <form action="{% url 'products:like' product.pk %}" method="POST">
-                                            {% csrf_token %}
-                                            {% if request.user in product.like_by.all %}
-                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-solid fa-heart"></i></button>
-                                            {% else %}
-                                                <button type="submit" class='btn btn-sm btn-outline-secondary'><i class="fa-regular fa-heart"></i></button>
-                                            {% endif %}
-                                        </form>
-                                        <p><strong>{{ product.name }} - {{ product.total_likes }} likes</strong></p>
+                                      <form action ="{% url "products:like" product.pk %}" method="POST">
+                                        {% csrf_token %}
+                                        {% if request.user in product.like_users.all %}
+                                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                                        {% else %}
+                                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                                        {% endif %}
+                                    </form>
+                                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                                     </div>
                                     <small class="text-body-secondary">
                                         {{ product.created_at|timesince }} 전
