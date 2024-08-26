@@ -129,14 +129,12 @@
 
 
 
-
-
 <br>
 <h2 style = "text-align: center"><strong>- Products -</strong></h2>
 
 <div class="album py-5 bg-white">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       {% for product in products %}
       <div class="col">
         <a href="{% url 'products:product_detail' product.pk %}">

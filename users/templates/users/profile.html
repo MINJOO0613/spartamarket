@@ -83,6 +83,7 @@
           <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'posts' or not request.POST.tab %}active{% endif %}">Posts</button>
       </form>
     </li>
+    {% if request.user.is_authenticated and request.user.username == request.user.username %}
     <li class="nav-item">
         <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
             {% csrf_token %}
@@ -90,6 +91,7 @@
             <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'likes' %}active{% endif %}">Likes</button>
         </form>
     </li>
+    {% endif %}
     <!-- 다른 탭들... -->
 </ul>
 <br><br><br>
