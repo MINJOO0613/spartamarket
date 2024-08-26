@@ -93,7 +93,7 @@
                 </div>
                 <small class="text-body-secondary">
                   <font style="vertical-align: inherit;">
-                    <font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font>
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
                   </font>
                 </small>
               </div>
@@ -113,18 +113,18 @@
   <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
 </select>
 
-<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 {% if request.user.is_authenticated %}
-<a href="{% url 'products:create' %}">
-    <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
-  </a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'products:create' %}">
+      <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
+    </a>
 </div>
 {% else %}
-<a href="{% url 'accounts:login' %}">
-  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-    <button class="btn btn-outline-secondary" type="submit"><strong>로그인 후 상품등록</strong></button>
-  </div>
-</a>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'accounts:login' %}">
+      <button class="btn btn-outline-secondary" type="submit"><strong>로그인 후 상품등록</strong></button>
+    </a>
+</div>
 {% endif %}
 
 
@@ -169,7 +169,7 @@
                     <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                 </div>
                 <small class="text-body-secondary">
-                    <font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font>
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
                   </font>
                 </small>
               </div>

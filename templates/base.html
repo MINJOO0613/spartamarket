@@ -133,53 +133,7 @@
             </path>
         </symbol>
     </svg>
-    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
-        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button"
-            aria-expanded="false" data-bs-toggle="dropdown" aria-label="Toggle theme">
-            <svg class="bi my-1 theme-icon-active" width="1em" height="1em">
-                <use id="theme-icon" href="#moon-stars-fill"></use>
-            </svg>
-            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
-            <li>
-                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light"
-                    aria-pressed="false" onclick="setTheme('light')">
-                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
-                        <use href="#sun-fill"></use>
-                    </svg>
-                    Light
-                    <svg class="bi ms-auto d-none" width="1em" height="1em">
-                        <use href="#check2"></use>
-                    </svg>
-                </button>
-            </li>
-            <li>
-                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark"
-                    aria-pressed="false" onclick="setTheme('dark')">
-                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
-                        <use href="#moon-stars-fill"></use>
-                    </svg>
-                    Dark
-                    <svg class="bi ms-auto d-none" width="1em" height="1em">
-                        <use href="#check2"></use>
-                    </svg>
-                </button>
-            </li>
-            <li>
-                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto"
-                    aria-pressed="false" onclick="setTheme('auto')">
-                    <svg class="bi me-2 opacity-50" width="1em" height="1em">
-                        <use href="#circle-half"></use>
-                    </svg>
-                    Auto
-                    <svg class="bi ms-auto d-none" width="1em" height="1em">
-                        <use href="#check2"></use>
-                    </svg>
-                </button>
-            </li>
-        </ul>
-    </div>
+    
 
     <script>
         function setTheme(theme) {
@@ -256,110 +210,89 @@
         </symbol>
     </svg>
 
-    <header class="py-3 mb-3 border-bottom">
-        <div class="row g-0 text-center" style="margin-left: 80px; margin-right: 500px;">
-            <div class="col-8">
-                <div class="">
-                    <a href="/" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-                        <img class="me-2 "src="http://localhost:8000/static/css/BI_1.png" style="width: 100px">
-                    </a>
-                </div>
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Eighth navbar example">
+        <div class="container">
+            <a href="/" >
+                <img class="me-2 "src="http://localhost:8000/static/css/BI_3.png" style="width: 100px">
+            </a>
+    
+          <div class="collapse navbar-collapse" id="navbarsExample07">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'search_app:searchResult' %}" method="get">
+                {% csrf_token %}
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q">
+            </form>
+            <div class="dropdown text-end">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    {% if request.user.is_authenticated %}
+                        {% if user.profile.profile_image %}
+                        <img src="{{ user.profile.profile_image.url }}" alt="profile_image" height="32" class="rounded-circle"
+                            style="width: 32px;">
+                        {% else %}
+                        <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+                        alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
+                        {% endif %}
+                    {% else %}
+
+                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+                        alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu text-small">
+                    {% if request.user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
+                    {% endif %}
+
+                    {% if request.user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li>
+                    {% endif %}
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'accounts:logout' %}" method="POST"
+                        onsubmit="return confirm('정말 나가시겠습니까?')">
+                        {% csrf_token %}
+                        <input class="dropdown-item" type="submit" value="로그아웃">
+                    </form>
+                    {% endif %}
+
+
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'accounts:delete' %}" method="POST"
+                        onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+                        {% csrf_token %}
+                        <input class="dropdown-item" type="submit" value="회원탈퇴">
+                    </form>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'accounts:login'%}">로그인</a></li>
+                    <li><a class="dropdown-item" href="{% url 'accounts:signup'%}">회원가입</a></li>
+                    {% endif %}
+                    
+                </ul>
             </div>
-            <div class="col-4">
-                <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
-                    <div class="d-flex align-items-center" style="margin-left: 250px;">
-                        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'search_app:searchResult' %}" method="get">
-                            {% csrf_token %}
-                            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q">
-                        </form>
-
-                        <div class="dropdown text-end">
-                            <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                {% if request.user.is_authenticated %}
-                                    {% if user.profile.profile_image %}
-                                    <img src="{{ user.profile.profile_image.url }}" alt="mdo" height="32" class="rounded-circle"
-                                        style="width: 32px;">
-                                    {% else %}
-                                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
-                                    alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
-                                    {% endif %}
-                                {% else %}
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-person" viewBox="0 0 16 16" style="margin-bottom: 4px;">
-                                    <path
-                                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" />
-                                </svg> -->
-                                <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
-                                    alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
-                                {% endif %}
-                            </a>
-                            <ul class="dropdown-menu text-small">
-                                {% if request.user.is_authenticated %}
-                                {% comment %} 
-                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}">{{ request.user }}</a>
-                                </li> {% endcomment %}
-                                {% else %}
-                                {% comment %} <li><a class="dropdown-item" href="">Guest</a></li> {% endcomment %}
-                                {% endif %}
-
-                                {% if request.user.is_authenticated %}
-                                <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
-                                {% endif %}
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li><a class="dropdown-item" href="#">Profile</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                {% if request.user.is_authenticated %}
-                                <form action="{% url 'accounts:logout' %}" method="POST"
-                                    onsubmit="return confirm('정말 나가시겠습니까?')">
-                                    {% csrf_token %}
-                                    <input class="dropdown-item" type="submit" value="로그아웃">
-                                </form>
-                                {% endif %}
-
-
-                                {% if request.user.is_authenticated %}
-                                <form action="{% url 'accounts:delete' %}" method="POST"
-                                    onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
-                                    {% csrf_token %}
-                                    <input class="dropdown-item" type="submit" value="회원탈퇴">
-                                </form>
-                                {% else %}
-                                <li><a class="dropdown-item" href="{% url 'accounts:login'%}">로그인</a></li>
-                                <li><a class="dropdown-item" href="{% url 'accounts:signup'%}">회원가입</a></li>
-                                {% endif %}
-                                
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        {% comment %} {% if request.user.is_authenticated %}
-        <a href="{% url 'accounts:update' %}">
-            <button>회원정보수정</button>
-        </a>
-        {% endif %} {% endcomment %}
-
-    </header>
-    <!-- <div class="container-fluid pb-3">
-                                <div class="d-grid gap-3" style="grid-template-columns: 1fr 2fr;">
-                                    <div class="bg-body-tertiary border rounded-3">
-                                        <br><br><br><br><br><br><br><br><br><br>
-                                    </div>
-                                    <div class="bg-body-tertiary border rounded-3">
-                                        <br><br><br><br><br><br><br><br><br><br>
-                                    </div>
-                                </div>
-                            </div> -->
+      </header>
 
     <div class="container">
         {% block content %}
         {% endblock content %}
     </div>
-
 
     <footer>
     <div class="container">
