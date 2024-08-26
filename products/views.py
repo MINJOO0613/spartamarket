@@ -3,7 +3,8 @@ from .models import Product
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse
+from datetime import datetime, timedelta
 
 
 def index(request):
@@ -31,9 +32,29 @@ def index(request):
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     # comment_form은 나중에 할고임
+
+    cookie_name = f'product_'
+    if cookie_name not in request.COOKIES:
+        expire_date, now = datetime.now(), datetime.now()
+        expire_date += timedelta(days=1)
+        expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+        expire_date -= now
+        max_age = expire_date.total_seconds()
+
+        response =  render(request, 'detail.html' ,{'data' : product_detail, 'comments' : comments, 're_comments' : re_comments, 'form':form})
+
+
+        if f'_{id}_' not in cookie_value:
+            cookie_value += f'{id}_'
+            response.set_cookie('hitblog', value=cookie_value, max_age=max_age, httponly=True)
+            product_detail.hits += 1
+            product_detail.save()
+        return response
+
     context = {
         "product": product,
-    }
+        # 'watched': watched,
+        }
     return render(request, "products/product_detail.html", context)
 
 

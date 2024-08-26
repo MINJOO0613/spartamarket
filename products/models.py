@@ -30,3 +30,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
+    
+    
+# class Watched(models.Model):
+#     watched = models.PositiveIntegerField(default=0)
+
+#     def __str__(self):
+#         return str(self.watched)

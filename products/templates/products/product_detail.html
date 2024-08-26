@@ -11,7 +11,7 @@
 <img src="{{ product.image.url }}">
 {% endif %}
 
-<p><strong>{{ product.author.username }}</strong> | {{ product.title }}</p>
+<p><strong>{{ product.author.username }}</strong> | {{ product.title }} | 조회수: {{ product_detail.hits }}</p>
 <p>{{ product.content }}</p>
 <p>{{ product.created_at|timesince }} 전</p>
 <p>{{ product.created_at }}</p>
