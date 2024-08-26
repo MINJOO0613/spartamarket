@@ -67,7 +67,7 @@
 <img src="{{ product.image.url }}">
 {% endif %}
 <br><br>
-<h4><strong>{{ product.author.username }}</strong> | {{ product.title }} | 조회수: {{ product_detail.hits }}</h4><br>
+<h4><strong>{{ product.author.username }}</strong> | {{ product.title }} | 조회수: {{product.product_views}}</h4><br>
 <h5>{{ product.content }}</h5><br>
 
 <form action ="{% url "products:like" product.pk %}" method="POST">

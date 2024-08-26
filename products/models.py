@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+# from django.db.models import F
 
 # Create your models here.
 class Product(models.Model):
@@ -13,6 +13,7 @@ class Product(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_products")
+    product_views = models.PositiveBigIntegerField(default=0)
 
     def __str__(self):
         return self.title
@@ -21,6 +22,11 @@ class Product(models.Model):
     def total_likes(self):
         return self.like_users.count()
     
+    @property
+    def count_views(self):
+        self.product_views = self.product_views + 1
+        self.save()
+        return self.product_views
 
 class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name = "comments", blank=True, null=True)
@@ -33,10 +39,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.content
-    
-    
-# class Watched(models.Model):
-#     watched = models.PositiveIntegerField(default=0)
-
-#     def __str__(self):
-#         return str(self.watched)

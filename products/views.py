@@ -4,7 +4,7 @@ from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 from django.http import HttpResponse
-from datetime import datetime, timedelta
+# from datetime import datetime, timedelta
 
 
 def index(request):
@@ -42,28 +42,12 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     comment_form = CommentForm()
     comments = product.comments.all().order_by("-pk")
-
-    # response =  render(request, 'products/product_detail.html' ,{'product' : product, 'comment_form' : comment_form, 'comments':comments})
-
-    # expire_date, now = datetime.now(), datetime.now()
-    # expire_date += timedelta(days=1)
-    # expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
-    # expire_date -= now
-    # max_age = expire_date.total_seconds()
-
-    # cookie_value = request.COOKIES.get('hitproduct', '_')
-    # if f'_{pk}_' not in cookie_value:
-    #     cookie_value += f'{pk}_'
-    #     response.set_cookie('hitproduct', value=cookie_value, max_age=max_age, httponly=True)
-    #     product.hits += 1
-    #     product.save()
-    # return response
+    product.save()
 
     context = {
         "product": product,
         "comment_form": comment_form,
         "comments": comments,
-        # 'watched': watched,
         }
     return render(request, "products/product_detail.html", context)
 
