@@ -91,6 +91,7 @@
       </form>
       {% endif %}
     </li>
+    {% if request.user.is_authenticated and request.user.username == user.username %}
     <li class="nav-item">
       {% if request.user.is_authenticated and request.user.username == user.username %}        
       <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
@@ -101,6 +102,7 @@
         {% elif request.user.is_authenticated and request.user.username == user.username %}      <p></p>
       {% endif %}
     </li>
+    {% endif %}
     <!-- 다른 탭들... -->
 </ul>
 <br><br><br>

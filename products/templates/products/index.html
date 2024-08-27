@@ -73,7 +73,7 @@
             <div class="card-body">
               <p class="card-text">
                 <font style="vertical-align: inherit;">
-                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}} | 조회수: {{product.product_views}}</font>
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
                 </font>
               </p>
               <div class="d-flex justify-content-between align-items-center">
@@ -129,14 +129,12 @@
 
 
 
-
-
 <br>
 <h2 style = "text-align: center"><strong>- Products -</strong></h2>
 
 <div class="album py-5 bg-white">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
       {% for product in products %}
       <div class="col">
         <a href="{% url 'products:product_detail' product.pk %}">
@@ -155,7 +153,8 @@
 
             <div class="card-body">
               <p class="card-text">
-                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}</font>
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
                 </font>
               </p>
               <div class="d-flex justify-content-between align-items-center">
@@ -171,7 +170,7 @@
                     <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                 </div>
                 <small class="text-body-secondary">
-                    <font style="vertical-align: inherit;">{{ product.created_at|timesince }} 전</font>
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
                   </font>
                 </small>
               </div>

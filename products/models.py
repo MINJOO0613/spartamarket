@@ -6,6 +6,15 @@ from django.utils import timezone
 
 # Create your models here.
 class Product(models.Model):
+    
+    CATEGORY_CHOICES = [
+        ('Top', 'Top'),
+        ('Bottom', 'Bottom'),
+        ('Acc', 'Acc'),
+        ('Outer', 'Outer'),
+        ('Bag', 'Bag'),
+    ]
+    
     title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,7 +24,9 @@ class Product(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_products")
-    # product_views = models.PositiveBigIntegerField(default=0)
+    
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='Top')  # 기본값을 'Top'으로 설정
+    price = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

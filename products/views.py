@@ -3,8 +3,8 @@ from .models import Product, Comment
 from .forms import ProductForm, CommentForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
-from django.http import HttpResponse
-# from datetime import datetime, timedelta
+from django.http import HttpResponseRedirect
+from django.db.models import Count
 
 
 def index(request):
@@ -17,7 +17,7 @@ def index(request):
 
     total_likes = sum(product.total_likes for product in Product.objects.all())
     latest_products = Product.objects.all().order_by('-id')[:4]
-    popular_products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)[:4]
+    popular_products = Product.objects.annotate(like_count=Count('like_users')).order_by('-like_count', '-created_at')[:4] # like_users의 수를 새고 like_count로 정렬 후 그 값이 같으면 created_at으로 정렬
     
     context = {
         'products':products,
