@@ -83,7 +83,7 @@
           <button type="submit" class="nav-link py-4 {% if request.POST.tab == 'posts' or not request.POST.tab %}active{% endif %}">Posts</button>
       </form>
     </li>
-    {% if request.user.is_authenticated and request.user.username == request.user.username %}
+    {% if request.user.is_authenticated and request.user.username == user.username %}
     <li class="nav-item">
         <form method="POST" action="{% url 'users:profile' username=request.user.username %}">
             {% csrf_token %}

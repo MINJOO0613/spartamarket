@@ -6,6 +6,7 @@ class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = "__all__"
+        widgets = {'price': forms.NumberInput(attrs={'step': 500}),}
         exclude = ('author', 'like_users',)
 
 
