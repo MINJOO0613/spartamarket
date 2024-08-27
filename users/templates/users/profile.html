@@ -139,15 +139,11 @@
                                         <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
                                         {% endif %}
                                     </form>
-                                    {% if product.user == request.user %}
                                     <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
                                     </div>
                                     <small class="text-body-secondary">
                                         {{ product.time_dif }}
                                     </small>
-                                    {% elif product.user != request.user %} 
-                                    <li></li> 
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

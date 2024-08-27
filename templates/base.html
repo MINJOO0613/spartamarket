@@ -259,10 +259,11 @@
 
                     {% if request.user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li>
-                    {% endif %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
+                    {% endif %}
+                    
                     {% if request.user.is_authenticated %}
                     <form action="{% url 'accounts:logout' %}" method="POST"
                         onsubmit="return confirm('정말 나가시겠습니까?')">
