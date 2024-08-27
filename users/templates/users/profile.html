@@ -106,13 +106,13 @@
     <!-- 다른 탭들... -->
 </ul>
 <br>
-{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated and request.user.username == user.username %}
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <a href="{% url 'products:create' %}">
       <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
     </a>
 </div>
-{%endif%}
+{% endif %}
 <br>
 <h2 style="text-align: center"><strong>- Products -</strong></h2>
 <br><br><br>
@@ -134,7 +134,13 @@
                             {% endif %}
                             <div class="card-body">
                                 <p class="card-text">
-                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}<br><strong>{{product.price}}원</strong><h8 class=views> | 🖱조회수 : {{ product.views }}</h8>
+                                  <strong>{{ product.author.username }}</strong> | 
+                                  <span class="title">
+                                      {{ product.title|truncatechars:30 }}
+                                  </span>
+                                </p>
+                                <p class="card-price">
+                                    {{ product.price }}원<h8 class=views> | 🖱조회수 : {{ product.views }}</h8>
                                 </p>
                                 
                                 <div class="d-flex justify-content-between align-items-center">
