@@ -8,5 +8,9 @@ def searchResult(request):
     query = None
     if 'q' in request.GET:
         query = request.GET.get('q')
-        products = Product.objects.all().filter(Q(title__icontains=query) | Q(content__icontains=query))
-    return render(request, 'search.html', {'query':query, 'products':products})
+        products = Product.objects.all().filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(author__username__icontains=query)
+        )
+    return render(request, 'search.html', {'query': query, 'products': products})
