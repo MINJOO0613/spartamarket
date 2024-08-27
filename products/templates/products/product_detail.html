@@ -69,7 +69,7 @@
 {% endif %}
 <br><br>
 <h4><strong>{{ product.author.username }}</strong> | {{ product.title }}<strong> - {{product.category}}</strong>
-    <br><br>{{product.price}}원</h4><h8 class=views>🖱조회수 : {{ product.views }}</h8><br>
+    <br><br>{{product.price}}원</h4><h8 class=views>🖱조회수 : {{ product.views }}</h8><br><br>
 <h5>{{ product.content }}</h5><br>
 <hr>
 <form action ="{% url "products:like" product.pk %}" method="POST">
