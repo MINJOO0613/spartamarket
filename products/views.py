@@ -5,10 +5,22 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_http_methods
 from django.http import HttpResponseRedirect
 from django.db.models import Count
+from datetime import timedelta, datetime
 
 
 def index(request):
     sort_by = request.GET.get('sort', 'created')
+    
+    # Top_products = Product.objects.filter(category='Top')
+    # Bottom_products = Product.objects.filter(category='Bottom')
+    # Acc_products = Product.objects.filter(category='Acc')
+    # Outer_products = Product.objects.filter(category='Outer')
+    # Bag_products = Product.objects.filter(category='Bag')
+    
+    categories = ['Top', 'Bottom', 'Acc', 'Outer', 'Bag']
+    categorized_products = {
+        category: Product.objects.filter(category=category) for category in categories
+    }
     
     if sort_by == 'likes':
         products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)
@@ -19,11 +31,18 @@ def index(request):
     latest_products = Product.objects.all().order_by('-id')[:4]
     popular_products = Product.objects.annotate(like_count=Count('like_users')).order_by('-like_count', '-created_at')[:4] # like_users의 수를 새고 like_count로 정렬 후 그 값이 같으면 created_at으로 정렬
     
+    
     context = {
         'products':products,
         'total_likes':total_likes,
         'latest_products': latest_products,
         'popular_products': popular_products,
+        # 'Top_products': Top_products,
+        # 'Bottom_products': Bottom_products,
+        # 'Acc_products': Acc_products,
+        # 'Outer_products': Outer_products,
+        # 'Bag_products': Bag_products,
+        'categorized_products': categorized_products,
     }
     return render(request, "products/index.html", context)
 
@@ -32,13 +51,34 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     comment_form = CommentForm()
     comments = product.comments.all().order_by("-pk")
-    product.save()
+    # product.save()
+
+    if product.author == request.user:
+        # naive_dt = datetime.datetime(2024, 4, 11)
+        # aware_dt = naive_dt.replace(tzinfo=datetime.timezone.utc)
+        # time_difference = aware_dt - last_view_time 
+        # last_view_time = product.last_view_time
+        # now = datetime.now()
+        # time_difference = now - last_view_time
+        # if time_difference >= timedelta(days=1):
+        #     # 24시간 이상 조회하지 않았음 -> 조회수 증가
+            # product.views += 1
+            # product.last_view_time = now
+            # product.save()
+        # else:
+        #     # 24시간 이내에 조회했음 -> 추가 조회수 증가 방지
+        pass
+    else:
+        product.views += 1
+        product.save()
+
 
     context = {
         "product": product,
         "comment_form": comment_form,
         "comments": comments,
         }
+    
     return render(request, "products/product_detail.html", context)
 
 

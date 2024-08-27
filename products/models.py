@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from datetime import timedelta
+# from datetime import datetime, timedelta
 from django.utils import timezone
 # from django.db.models import F
 
@@ -24,9 +24,9 @@ class Product(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="products"
     )
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="liked_products")
-    
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='Top')  # 기본값을 'Top'으로 설정
     price = models.IntegerField(default=0)
+    views = models.PositiveIntegerField(default=1)
 
     def __str__(self):
         return self.title

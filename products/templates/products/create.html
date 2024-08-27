@@ -8,9 +8,18 @@
     {% csrf_token %}
 
     {{ form.as_p }}
+
     <br>
     <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>저장</strong></font></font></button>
 </form>
+
+    {% if form.errors %}
+        <script type="text/javascript">
+            {% if form.price.errors %}
+                showError("{{ form.price.errors.0 }}");
+            {% endif %}
+        </script>
+    {% endif %}
 
 <br><br>
 <head>

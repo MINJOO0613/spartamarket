@@ -105,10 +105,17 @@
     {% endif %}
     <!-- 다른 탭들... -->
 </ul>
-<br><br><br>
+<br>
+{% if request.user.is_authenticated %}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'products:create' %}">
+      <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
+    </a>
+</div>
+{%endif%}
+<br>
 <h2 style="text-align: center"><strong>- Products -</strong></h2>
-<br><br>
-
+<br><br><br>
 <div class="album py-5 bg-body-tertiary">
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
@@ -127,8 +134,9 @@
                             {% endif %}
                             <div class="card-body">
                                 <p class="card-text">
-                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}
+                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}<br><strong>{{product.price}}원</strong><h8 class=views> | 🖱조회수 : {{ product.views }}</h8>
                                 </p>
+                                
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                       <form action ="{% url "products:like" product.pk %}" method="POST">
