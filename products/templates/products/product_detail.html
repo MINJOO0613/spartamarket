@@ -92,20 +92,29 @@
     <p class="mb-0">{{ product.time_dif }}</p>
 </div>
 
+<br>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <p class="views text-muted mb-0" style="font-size: 0.9em;">
+        조회수: {{ product.views }}
+    </p>
+</div>
+<br>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <a href="{% url 'index' %}" class="btn btn-outline-primary">목록보기</a>
+    
+    <div class="d-flex align-items-center">
+        {% if user == product.author %}
+        <a href="{% url 'products:update' product.pk %}" class="btn btn-outline-secondary mr-2">수정하기</a>
+        <form action="{% url 'products:delete' product.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">
+                <strong>삭제</strong>
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
 
-<br><br>
-<a href="{% url 'index' %}">목록보기</a>
-
-{% if user == product.author %}
-<a href="{% url 'products:update' product.pk %}">수정하기</a>
-<br><br>
-
-<form action="{% url 'products:delete' product.pk %}" method="POST">
-    {% csrf_token %}
-    <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"  onclick="return confirm('정말 삭제하시겠습니까?')"><font style="vertical-align: inherit;"><strong>삭제</strong></font></font></button>
-</form>
-
-{% endif %}
         </div> <!-- end card-box-->
 
     </div> <!-- end col -->

@@ -38,29 +38,39 @@
                 {% endif %}
     
                 <div class="card-body">
-                  <p class="card-text">
-                      <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong><h8 class=views> | 🖱조회수 : {{ product.views }}</h8></font>
-                      {% comment %} <p>{{product.price}}0원</p> {% endcomment %}
-                    </font>
-                  </p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                        <form action ="{% url "products:like" product.pk %}" method="POST">
-                            {% csrf_token %}
-                            {% if request.user in product.like_users.all %}
-                            <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
-                            {% else %}
-                            <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
-                            {% endif %}
-                        </form>
-                        <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
-                    </div>
-                    <small class="text-body-secondary">
-                        <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
-                      </font>
-                    </small>
-                  </div>
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <p class="views text-muted mb-0" style="font-size: 0.9em;">
+                        조회수: {{ product.views }}
+                    </p>
                 </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="card-text mb-0">
+                        <strong>{{ product.author.username }}</strong> | 
+                        <span class="title">{{ product.title|truncatechars:25 }}</span>
+                    </p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center" style="margin-top: -30px;">
+                  <p class="card-price mb-0">
+                          <strong>{{ product.price }}원</strong>
+                      </p>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center mt-2">
+                      <div class="btn-group">
+                          <form action="{% url 'products:like' product.pk %}" method="POST">
+                              {% csrf_token %}
+                              {% if request.user in product.like_users.all %}
+                                  <button type="submit" class="no_outline_btn"><i class="fa-solid fa-heart"></i></button>
+                              {% else %}
+                                  <button type="submit" class="no_outline_btn"><i class="fa-regular fa-heart"></i></button>
+                              {% endif %}
+                          </form>
+                          <p class="mb-0"><strong>{{ product.name }}_ {{ product.total_likes }} likes</strong></p>
+                      </div>
+                      <small class="text-body-secondary">
+                          <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                      </small>
+                  </div>
+              </div>
               </div>
             </a>
           </div>
