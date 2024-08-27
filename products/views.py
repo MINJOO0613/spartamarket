@@ -50,11 +50,13 @@ def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     comment_form = CommentForm()
     comments = product.comments.all().order_by("-pk")
+    product.save()
+
     context = {
         "product": product,
         "comment_form": comment_form,
         "comments": comments,
-    }
+        }
     return render(request, "products/product_detail.html", context)
 
 

@@ -155,15 +155,15 @@
             activeButton.setAttribute('aria-pressed', 'true');
 
             // 페이지 테마를 변경
-            document.documentElement.setAttribute('data-bs-theme', theme);
+            /*document.documentElement.setAttribute('data-bs-theme', theme);
 
             // 드롭다운 버튼의 아이콘 변경
             const iconMap = {
                 light: '#sun-fill',
                 dark: '#moon-stars-fill',
                 auto: '#circle-half'
-            };
-            const themeIcon = document.getElementById('theme-icon');
+            }; 
+            const themeIcon = document.getElementById('theme-icon');*/
 
             // `xlink:href`와 `href` 모두 설정하여 브라우저 호환성 보장
             themeIcon.setAttribute('xlink:href', iconMap[theme]); // 일부 브라우저에 필요
@@ -222,29 +222,53 @@
                 <img class="me-2 "src="http://localhost:8000/static/css/BI_3.png" style="width: 100px">
             </a>
     
-          <div class="collapse navbar-collapse" id="navbarsExample07">
+        <div class="collapse navbar-collapse" id="navbarsExample07">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
+            <li class="nav-item">
+                {% if request.user.is_authenticated %}
+                    <form class="nav-link active" action="{% url 'accounts:logout' %}" method="POST"
+                        onsubmit="return confirm('정말 나가시겠습니까?')">
+                        {% csrf_token %}
+                        <input class="dropdown-item" type="submit" value="Logout">
+                    </form>
+                {% comment %} <a class="nav-link active" href="{% url 'accounts:logout'%}" aria-current="page">Logout</a> {% endcomment %}
+                {% else %}
+                <a class="nav-link active" href="{% url 'accounts:login'%}" aria-current="page">Login</a>
+                {% endif %}
+            </li>
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
+            <li class="nav-item dropdown">
+                
+                
+                    {% comment %} <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li> {% endcomment %}
+                    {% if request.user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                        <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li>
+                    {% endif %}
+                    <li>
+                    {% if request.user.is_authenticated %}
+                    <form action="{% url 'accounts:delete' %}" method="POST" onsubmit="return confirm('정말 탈퇴하시겠습니까?')">
+                    {% csrf_token %}
+                    <input class="dropdown-item" type="submit" value="회원탈퇴">
+                    </ul>
+                    {% else %}
+                    {% comment %} <li><a class="dropdown-item" href="{% url 'accounts:login'%}">로그인</a></li> {% endcomment %}
+                    <li><a class="nav-link active" href="{% url 'accounts:signup'%}">| &nbsp; Sign-up</a></li>
+                    {% endif %}
+                    </form>
+                
+            </li>
             </ul>
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'search_app:searchResult' %}" method="get">
                 {% csrf_token %}
                 <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="q">
             </form>
             <div class="dropdown text-end">
-                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
-                    data-bs-toggle="dropdown" aria-expanded="false">
+                {% comment %} <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                    data-bs-toggle="dropdown" aria-expanded="false"> {% endcomment %}
                     {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'users:profile' request.user.username %}">
                         {% if user.profile.profile_image %}
                         <img src="{{ user.profile.profile_image.url }}" alt="profile_image" height="32" class="rounded-circle"
                             style="width: 32px;">
@@ -252,12 +276,14 @@
                         <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
                         alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
                         {% endif %}
+                        </a></li>
                     {% else %}
-
-                    <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
-                        alt="mdo" height="32" class="rounded-circle" style="width: 32px;">
-                    {% endif %}
-                </a>
+                    <li><a href="{% url 'accounts:login'%}"><img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+                        alt="mdo" height="32" class="rounded-circle" style="width: 32px;"> 
+                    </a></li>
+                    {% comment %} <li><a class="dropdown-item" href="{% url 'accounts:signup'%}">회원가입</a></li> {% endcomment %}
+                    {% endif %}                    
+                {% comment %} </a>
                 <ul class="dropdown-menu text-small">
                     {% if request.user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url 'users:profile' request.user.username %}"><strong>{{ request.user }}'s</strong> page</a></li>
@@ -265,10 +291,11 @@
 
                     {% if request.user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url 'accounts:update' %}">회원정보수정</a></li>
-                    {% endif %}
                     <li>
                         <hr class="dropdown-divider">
                     </li>
+                    {% endif %}
+                    
                     {% if request.user.is_authenticated %}
                     <form action="{% url 'accounts:logout' %}" method="POST"
                         onsubmit="return confirm('정말 나가시겠습니까?')">
@@ -287,7 +314,7 @@
                     {% else %}
                     <li><a class="dropdown-item" href="{% url 'accounts:login'%}">로그인</a></li>
                     <li><a class="dropdown-item" href="{% url 'accounts:signup'%}">회원가입</a></li>
-                    {% endif %}
+                    {% endif %} {% endcomment %}
                     
                 </ul>
             </div>
