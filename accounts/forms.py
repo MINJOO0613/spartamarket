@@ -15,7 +15,7 @@ class CustomUserCreationForm(UserCreationForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs) # 꼭 있어야 한다!
+        super().__init__(*args, **kwargs)
         self.fields['username'].label = '아이디'
 
 
@@ -31,7 +31,7 @@ class CustomUserChangeForm(UserChangeForm):
         ]
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs) # 꼭 있어야 한다!
+        super().__init__(*args, **kwargs)
         self.fields['username'].label = '아이디'
 
         # 비밀번호 변경
@@ -40,3 +40,4 @@ class CustomUserChangeForm(UserChangeForm):
                 "You can change the password " '<a href="{}">here</a>.'
             ).format(f"{reverse('accounts:change_password')}")
             self.fields["password"].help_text = password_help_text
+
