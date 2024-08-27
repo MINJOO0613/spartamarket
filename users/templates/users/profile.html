@@ -116,7 +116,13 @@
                             {% endif %}
                             <div class="card-body">
                                 <p class="card-text">
-                                    <strong>{{ product.author.username }}</strong> | {{ product.title }}
+                                  <strong>{{ product.author.username }}</strong> | 
+                                  <span class="title">
+                                      {{ product.title|truncatechars:30 }}
+                                  </span>
+                                </p>
+                                <p class="card-price">
+                                    {{ product.price }}원
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
