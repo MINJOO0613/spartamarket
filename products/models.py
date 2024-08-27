@@ -37,7 +37,7 @@ class Product(models.Model):
     
 
     def time_dif(self):
-        time = timezone.now() - self.updated_at
+        time = timezone.now() - self.created_at
         day = time.days
         second = time.seconds
         if day > 0:

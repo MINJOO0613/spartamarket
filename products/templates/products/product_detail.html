@@ -68,37 +68,53 @@
 <img src="{{ product.image.url }}">
 {% endif %}
 <br><br>
-<h4><strong>{{ product.author.username }}</strong> | {{ product.title }}<strong> - {{product.category}}</strong>
-    <br><br>{{product.price}}원</h4><h8 class=views>🖱조회수 : {{ product.views }}</h8><br>
-<h5>{{ product.content }}</h5><br>
+<h4>
+    <span class="category-box">{{ product.category }}</span> <!-- 카테고리: 둥근 박스형으로 강조 -->
+    <br><br>
+    <strong style="font-size: 1.2em;">{{ product.price }}원</strong> <!-- 가격: 볼드체 및 카테고리보다 작고 다음 항목보다는 크게 -->
+    <br><br>
+    <strong>{{ product.author.username }}</strong> | {{ product.title }} <!-- author.username: 볼드체 | 타이틀: 보통 글자 크기 -->
+</h4>
+<br>
+<h5>{{ product.content }}</h5> <!-- 내용: 보통 글자 크기 -->
+<br>
 <hr>
-<form action ="{% url "products:like" product.pk %}" method="POST">
-  {% csrf_token %}
-  {% if request.user in product.like_users.all %}
-  <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
-  {% else %}
-  <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
-  {% endif %}
-  <strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
-</form>
+<div class="d-flex justify-content-between align-items-center">
+    <form action="{% url 'products:like' product.pk %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        {% if request.user in product.like_users.all %}
+        <button type="submit" class="no_outline_btn"><i class="fa-solid fa-heart"></i></button>
+        {% else %}
+        <button type="submit" class="no_outline_btn"><i class="fa-regular fa-heart"></i></button>
+        {% endif %}
+        <strong> {{ product.name }}_ {{ product.total_likes }} likes</strong>
+    </form>
+    <p class="mb-0">{{ product.time_dif }}</p>
+</div>
+
 <br>
-    <p>{{ product.time_dif }} </p>
-
-
-
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <p class="views text-muted mb-0" style="font-size: 0.9em;">
+        조회수: {{ product.views }}
+    </p>
+</div>
 <br>
-<a href="{% url 'index' %}">목록보기</a>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <a href="{% url 'index' %}" class="btn btn-outline-primary">목록보기</a>
+    
+    <div class="d-flex align-items-center">
+        {% if user == product.author %}
+        <a href="{% url 'products:update' product.pk %}" class="btn btn-outline-secondary mr-2">수정하기</a>
+        <form action="{% url 'products:delete' product.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">
+                <strong>삭제</strong>
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
 
-{% if user == product.author %}
-<a href="{% url 'products:update' product.pk %}">수정하기</a>
-<br><br>
-
-<form action="{% url 'products:delete' product.pk %}" method="POST">
-    {% csrf_token %}
-    <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"  onclick="return confirm('정말 삭제하시겠습니까?')"><font style="vertical-align: inherit;"><strong>삭제</strong></font></font></button>
-</form>
-
-{% endif %}
         </div> <!-- end card-box-->
 
     </div> <!-- end col -->

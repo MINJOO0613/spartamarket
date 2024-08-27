@@ -325,14 +325,14 @@ body{
 }  
 
 .card-body {
-    height: 140px; /* 카드 본문의 높이를 충분히 확보 */
+    height: 190px; /* 카드 본문의 높이를 충분히 확보 */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   
   .card-text {
-    height: 60px; /* 텍스트 영역의 높이를 고정 */
+    height: 80px; /* 텍스트 영역의 높이를 고정 */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -355,3 +355,19 @@ body{
   .no_outline_btn i {
     font-size: 1.7rem; /* 아이콘 크기를 조정 */
   }
+
+  .card-price {
+    white-space: nowrap; /* 가격이 줄바꿈되지 않도록 설정 */
+    font-weight: bold; /* 가격을 볼드체로 설정 */
+    font-size: 1.1em; /* 폰트 크기를 기존보다 약간 키움 */
+}
+
+.category-box {
+    display: inline-block;
+    padding: 7px 30px; /* 안쪽 여백 조절 */
+    border-radius: 15px; /* 둥근 모서리 */
+    background-color: #f0f8ff; /* 배경색 */
+    color: #000080; /* 텍스트 색상 */
+    font-size: 1em; /* 글자 크기 */
+    font-weight: bold; /* 볼드체 */
+}
