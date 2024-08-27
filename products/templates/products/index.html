@@ -110,7 +110,21 @@
   </div>
 </div>
 
-<br>
+<br><br>
+<ul class="nav nav-underline justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link disabled" aria-disabled="true">ALL</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+</ul>
 <hr>
 <select onchange="location = this.value;">
   <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
@@ -460,9 +474,9 @@
     </div>
   </div>
 </div> {% endcomment %}
-
+<hr>
 {% for category, products in categorized_products.items %}
-    <br>
+    <br><br>
     <h2 style="text-align: center"><strong>- {{ category }} -</strong></h2>
     <div class="album py-5 bg-white">
       <div class="container">
