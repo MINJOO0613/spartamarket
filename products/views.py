@@ -42,6 +42,7 @@ def index(request):
         # 'Acc_products': Acc_products,
         # 'Outer_products': Outer_products,
         # 'Bag_products': Bag_products,
+        'categories':categories,
         'categorized_products': categorized_products,
     }
     return render(request, "products/index.html", context)
@@ -161,4 +162,31 @@ def like(request, pk):
         return redirect(request.META.get('HTTP_REFERER', 'products:index'))
     return redirect("accounts:login")
 
+    
+def product_list_by_category(request, category):
+    products = Product.objects.filter(category=category)
 
+    # 모든 카테고리 가져오기
+    categories = Product.objects.values_list('category', flat=True).distinct()
+    
+    sort_by = request.GET.get('sort', 'created')
+    
+    # Top_products = Product.objects.filter(category='Top')
+    # Bottom_products = Product.objects.filter(category='Bottom')
+    # Acc_products = Product.objects.filter(category='Acc')
+    # Outer_products = Product.objects.filter(category='Outer')
+    # Bag_products = Product.objects.filter(category='Bag')
+    
+
+    total_likes = sum(product.total_likes for product in Product.objects.all())
+    latest_products = Product.objects.all().order_by('-id')[:4]
+    popular_products = Product.objects.annotate(like_count=Count('like_users')).order_by('-like_count', '-created_at')[:4] # like_users의 수를 새고 like_count로 정렬 후 그 값이 같으면 created_at으로 정렬
+    
+    
+    context = {
+        'products': products,
+        'categories': categories,
+        'selected_category': category,
+    }
+
+    return render(request, 'products/product_list.html', context)
