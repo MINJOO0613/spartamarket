@@ -11,6 +11,17 @@ from datetime import timedelta, datetime
 def index(request):
     sort_by = request.GET.get('sort', 'created')
     
+    # Top_products = Product.objects.filter(category='Top')
+    # Bottom_products = Product.objects.filter(category='Bottom')
+    # Acc_products = Product.objects.filter(category='Acc')
+    # Outer_products = Product.objects.filter(category='Outer')
+    # Bag_products = Product.objects.filter(category='Bag')
+    
+    categories = ['Top', 'Bottom', 'Acc', 'Outer', 'Bag']
+    categorized_products = {
+        category: Product.objects.filter(category=category) for category in categories
+    }
+    
     if sort_by == 'likes':
         products = sorted(Product.objects.all(), key=lambda product: product.total_likes, reverse=True)
     else:
@@ -20,11 +31,18 @@ def index(request):
     latest_products = Product.objects.all().order_by('-id')[:4]
     popular_products = Product.objects.annotate(like_count=Count('like_users')).order_by('-like_count', '-created_at')[:4] # like_users의 수를 새고 like_count로 정렬 후 그 값이 같으면 created_at으로 정렬
     
+    
     context = {
         'products':products,
         'total_likes':total_likes,
         'latest_products': latest_products,
         'popular_products': popular_products,
+        # 'Top_products': Top_products,
+        # 'Bottom_products': Bottom_products,
+        # 'Acc_products': Acc_products,
+        # 'Outer_products': Outer_products,
+        # 'Bag_products': Bag_products,
+        'categorized_products': categorized_products,
     }
     return render(request, "products/index.html", context)
 

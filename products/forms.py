@@ -8,6 +8,12 @@ class ProductForm(forms.ModelForm):
         fields = "__all__"
         widgets = {'price': forms.NumberInput(attrs={'step': 500}),}
         exclude = ('author', 'like_users',)
+        
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price < 0:
+            raise forms.ValidationError("성현님이 다영님한테 만원을 준다.")
+        return price
 
 
 class CommentForm(forms.ModelForm):

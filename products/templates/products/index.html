@@ -182,7 +182,327 @@
   </div>
 </div>
 
+{% comment %} <br>
+<h2 style = "text-align: center"><strong>- Top -</strong></h2>
 
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in Top_products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+            {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                  dy=".3em">No image</text>
+              </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br>
+<h2 style = "text-align: center"><strong>- Bottom -</strong></h2>
+
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in Bottom_products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+            {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                  dy=".3em">No image</text>
+              </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br>
+<h2 style = "text-align: center"><strong>- Acc -</strong></h2>
+
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in Acc_products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+            {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                  dy=".3em">No image</text>
+              </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br>
+<h2 style = "text-align: center"><strong>- Outer -</strong></h2>
+
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in Outer_products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+            {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                  dy=".3em">No image</text>
+              </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<br>
+<h2 style = "text-align: center"><strong>- Bag -</strong></h2>
+
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in Bag_products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+              <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+            {% else %}
+              <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                  dy=".3em">No image</text>
+              </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <p class="card-text">
+                  <font style="vertical-align: inherit;"><strong>{{product.author.username}}</strong> | {{product.title}}<br><strong>{{product.price}}원</strong></font>
+                  
+                </font>
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div> {% endcomment %}
+
+{% for category, products in categorized_products.items %}
+    <br>
+    <h2 style="text-align: center"><strong>- {{ category }} -</strong></h2>
+    <div class="album py-5 bg-white">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+          {% for product in products %}
+          <div class="col">
+            <a href="{% url 'products:product_detail' product.pk %}">
+              <div class="card shadow-sm">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" alt="Product Image">
+                {% else %}
+                  <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+                    role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#55595c"></rect>
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">No image</text>
+                  </svg>
+                {% endif %}
+
+                <div class="card-body">
+                  <p class="card-text">
+                      <strong>{{ product.author.username }}</strong> | {{ product.title }}<br>
+                      <strong>{{ product.price }}원</strong>
+                  </p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <form action="{% url 'products:like' product.pk %}" method="POST">
+                            {% csrf_token %}
+                            {% if request.user in product.like_users.all %}
+                            <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                            {% else %}
+                            <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                            {% endif %}
+                        </form>
+                        <p><strong> {{ product.name }}_ {{ product.total_likes }} likes</strong></p>
+                    </div>
+                    <small class="text-body-secondary">
+                        {{ product.time_dif }}
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endfor %}
 
 
 
