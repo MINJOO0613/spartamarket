@@ -68,42 +68,6 @@ python manage.py runserver
 ```
 
 
-
-## File Structure
-
-
-```
-spartamarket/
-├── backend/
-│   ├── config/
-│   │   └── config.js           # Configuration settings
-│   ├── controllers/             # API route handlers
-│   ├── models/                  # Database models
-│   ├── routes/                  # API routes
-│   ├── services/                # Business logic and services
-│   ├── utils/                   # Utility functions
-│   ├── .env                     # Environment variables
-│   ├── package.json             # Node.js dependencies and scripts
-│   └── server.js                # Entry point for the backend
-├── frontend/
-│   ├── public/
-│   │   └── index.html           # Main HTML file
-│   ├── src/
-│   │   ├── components/          # React components
-│   │   ├── pages/               # React pages
-│   │   ├── styles/              # CSS/SCSS files
-│   │   ├── utils/               # Utility functions
-│   │   ├── App.js               # Main React component
-│   │   └── index.js             # Entry point for the frontend
-│   ├── package.json             # Frontend dependencies and scripts
-│   └── .env                     # Environment variables for frontend
-├── docs/                        # Documentation files
-│   └── api.md                   # API documentation
-├── .gitignore                   # Git ignore file
-├── LICENSE                      # Project license
-└── README.md                    # Project overview and instructions
-```
-
 # SPARTAMARKET
 Welcome to Spartamarket! 
 
