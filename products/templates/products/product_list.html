@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="http://localhost:8000/static/css/001.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/002.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/003.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/004.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/005.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="http://localhost:8000/static/css/006.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+{% comment %} <select onchange="location = this.value;">
+  <option value="?sort=created" {% if request.GET.sort == 'created' %}selected{% endif %}>최신순</option>
+  <option value="?sort=likes" {% if request.GET.sort == 'likes' %}selected{% endif %}>인기순</option>
+</select> {% endcomment %}
+
+{% comment %} <h1>Total Likes: {{ total_likes }}</h1>
+<a href="?sort=likes">인기순</a>
+<a href="?sort=created">최신순</a> {% endcomment %}
+
+
+
+<br>
+
+
+{% if request.user.is_authenticated %}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'products:create' %}">
+      <button class="btn btn-outline-secondary" type="submit"><strong>상품등록</strong></button>
+    </a>
+</div>
+{% else %}
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a href="{% url 'accounts:login' %}">
+      <button class="btn btn-outline-secondary" type="submit"><strong>로그인 후 상품등록</strong></button>
+    </a>
+</div>
+{% endif %}
+
+<hr>
+<ul class="nav nav-underline justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link {% if not selected_category %}active{% endif %}" href="{% url 'products:index' %}">ALL</a>
+  </li>
+  {% for category in categories_list %}
+  <li class="nav-item">
+    <a class="nav-link {% if selected_category == category %}active{% endif %}" href="{% url 'products:product_list_by_category' category=category %}">{{ category }}</a>
+  </li>
+  {% endfor %}
+</ul>
+
+
+<div class="album py-5 bg-white">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+      {% for product in products %}
+      <div class="col">
+        <a href="{% url 'products:product_detail' product.pk %}">
+          <div class="card shadow-sm">
+
+            {% if product.image %}
+            <img src="{{ product.image.url }}" class="bd-placeholder-img card-img-top" style="width="100%";
+              height="100%" ;">
+            {% else %}
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
+              role="img" aria-label="플레이스홀더: 썸네일" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title>Placeholder</title>
+              <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
+                dy=".3em">No image</text>
+            </svg>
+            {% endif %}
+
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <p class="views text-muted mb-0" style="font-size: 0.9em;">
+                    조회수: {{ product.views }}
+                </p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text mb-0">
+                    <strong>{{ product.author.username }}</strong> | 
+                    <span class="title">{{ product.title|truncatechars:30 }}</span>
+                </p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" style="margin-top: -30px;">
+              <p class="card-price mb-0">
+                      <strong>{{ product.formatted_price }}원</strong>
+                  </p>
+              </div><br>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                    <form action ="{% url "products:like" product.pk %}" method="POST">
+                        {% csrf_token %}
+                        {% if request.user in product.like_users.all %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-solid fa-heart"></i></button>
+                        {% else %}
+                        <button type="submit" class='no_outline_btn'><i class="fa-regular fa-heart"></i></button>
+                        {% endif %}
+                    </form>
+                    <p><strong> {{ product.name }}_ {{ product.total_likes }}  likes</strong></p>
+                </div>
+                <small class="text-body-secondary">
+                  <font style="vertical-align: inherit;">
+                    <font style="vertical-align: inherit;">{{ product.time_dif }}</font>
+                  </font>
+                </small>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock content %}

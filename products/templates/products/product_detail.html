@@ -1,45 +1,172 @@
 {% extends 'base.html' %} 
 
+{% load custom_filters %}
 {% block content %}
 
-<!-- # 상품 판매자가 올린 미디어(이미지)파일을 띄우기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+<div class="container">
+<div class="row">
+    <div class="col-lg-4 col-xl-4">
+        <a href="{% url 'users:profile' product.author.username %}">
+        <div class="card-box text-center">
+            {% if product.author.profile.profile_image %}
+            <img src="{{ product.author.profile.profile_image.url }}" alt="profile-image" height="200" class="rounded-circle"style="width:200px;">
+            {% else %}
+            <img src="https://teamsparta.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F83c75a39-3aba-4ba4-a792-7aefe4b07895%2F91b523d3-e116-4d12-a8c9-401ea4b12c4a%2Fuser.png?table=block&id=7d771e5a-5901-42b4-9532-f42f6bf86e5d&spaceId=83c75a39-3aba-4ba4-a792-7aefe4b07895&width=260&userId=&cache=v2"
+            alt="profile-image" height="200" class="rounded-circle" style="width:200px;">
+            {% endif %}
+            <br><br>
+            <h4 class="mb-0">{{ product.author }}</h4>
+            <p class="text-muted">@{{ product.author }}</p>
 
-<hr>
-<br><br>
+            {% if product.author != request.user %}
+            {% if is_following %}
+              <form action="{% url 'users:unfollow_user' product.author.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Unfollow</button>
+              </form>
+            {% else %}
+              <form action="{% url 'users:follow_user' product.author.username %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
+              </form>
+            {% endif %}
+          {% endif %}
+            {% comment %} <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button> {% endcomment %}
 
-{% if product.image %}
+            <div class="text-left mt-3">
+                <h4 class="font-13 text-uppercase">About Me :</h4>
+                <p class="text-muted font-13 mb-3">
+                    {{ product.author.profile.description }}
+                </p>
+            </div>
+
+            <ul class="social-list list-inline mt-3 mb-0">
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="fab fa-google"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="fab fa-github"></i></a>
+                </li>
+            </ul>
+        </div> <!-- end card-box -->
+
+        
+
+    </div> <!-- end col-->
+
+    <div class="col-lg-8 col-xl-8">
+        <div class="card-box">
+            {% if product.image %}
 <img src="{{ product.image.url }}">
 {% endif %}
-
-<p><strong>{{ product.author.username }}</strong> | {{ product.title }}</p>
-<p>{{ product.content }}</p>
-<p>{{ product.created_at|timesince }} 전</p>
-<p>{{ product.created_at }}</p>
-<p>{{ product.updated_at }}</p>
-
-<form action ="{% url "products:like" product.pk %}" method="POST">
-  {% csrf_token %}
-  {% if request.user in product.like_users.all %}
-      <input type = "submit" value="좋아요 취소">
-  {% else %}
-      <input type = "submit" value="좋아요">
-  {% endif %}
-</form></font></font></button>
-
+<br><br>
+<h4>
+    <span class="category-box">{{ product.category }}</span> <!-- 카테고리: 둥근 박스형으로 강조 -->
+    <br><br>
+    <strong style="font-size: 1.2em;">{{ product.formatted_price }}원</strong> <!-- 가격: 볼드체 및 카테고리보다 작고 다음 항목보다는 크게 -->
+    <br><br>
+    <strong>{{ product.author.username }}</strong> | {{ product.title }} <!-- author.username: 볼드체 | 타이틀: 보통 글자 크기 -->
+</h4>
+<br>
+<h5>{{ product.content }}</h5> <!-- 내용: 보통 글자 크기 -->
+<br>
+<hr>
+<div class="d-flex justify-content-between align-items-center">
+    <form action="{% url 'products:like' product.pk %}" method="POST" class="d-inline">
+        {% csrf_token %}
+        {% if request.user in product.like_users.all %}
+        <button type="submit" class="no_outline_btn"><i class="fa-solid fa-heart"></i></button>
+        {% else %}
+        <button type="submit" class="no_outline_btn"><i class="fa-regular fa-heart"></i></button>
+        {% endif %}
+        <strong> {{ product.name }}_ {{ product.total_likes }} likes</strong>
+    </form>
+    <p class="mb-0">{{ product.time_dif }}</p>
+</div>
 
 <br>
-<a href="{% url 'index' %}">목록보기</a>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <p class="views text-muted mb-0" style="font-size: 0.9em;">
+        조회수: {{ product.views }}
+    </p>
+</div>
+<br>
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <a href="{% url 'index' %}" class="btn btn-outline-primary">목록보기</a>
+    
+    <div class="d-flex align-items-center">
+        {% if user == product.author %}
+        <a href="{% url 'products:update' product.pk %}" class="btn btn-outline-secondary mr-2">수정하기</a>
+        <form action="{% url 'products:delete' product.pk %}" method="POST">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">
+                <strong>삭제</strong>
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
 
-{% if user == product.author %}
-<a href="{% url 'products:update' product.pk %}">수정하기</a>
-<br><br>
+        </div> <!-- end card-box-->
 
-<form action="{% url 'products:delete' product.pk %}" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="삭제" onclick="return confirm('정말 삭제하시겠습니까?')">
-</form>
+    </div> <!-- end col -->
+</div>
+</div>
 
-{% endif %}
+
+<div class="p-5 bg-body-tertiary rounded-3">
+    <br>
+    <hr>
+    <div>
+        <h3>댓글 {{ comments|length }}개</h3><br>
+        {% if request.user.is_authenticated %}
+        <form action="{% url "products:comment_create" product.pk %}" method="POST" class="d-flex align-items-center">
+            {% csrf_token %}
+            <div class="flex-grow-1">
+                {{ comment_form.as_p }}
+            </div>
+            <button class="btn btn-outline-secondary btn-sm ms-0" type="submit">
+                <strong>입력</strong>
+            </button>
+        </form>
+    </div>
+    {% endif %}
+
+    <hr>
+    {% for comment in comments %}
+    <ul class="list-unstyled">
+        <li class="d-flex align-items-center mb-2 p-2 border rounded">
+            <strong class="me-2">{{ comment.user.username }} |</strong>
+            <span class="flex-grow-1">{{ comment.content }}</span>
+            
+            {% if user == comment.user %}
+            <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-outline" type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">
+                    <strong>삭제</strong>
+                </button>
+            </form>
+            {% endif %}
+        </li>
+    </ul>
+    {% empty %}
+    <br><br>
+    <p>댓글이 없습니다.</p>
+    {% endfor %}
+</div>
+
+
+
+
+
 
 
 {% endblock content %}

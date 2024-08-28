@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<br><br><br><br><br><br>
 <h1>Edit Products</h1>
-
-<form action="{% url 'products:update' product.pk %}", method="POST">
+<br>
+<form action="{% url 'products:update' product.pk %}", method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
-    {{ form.as_p }}
-    <button type="sumbit">수정</button><br><br>
+    {{ form.as_p }}<br>
+    <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>수정완료</strong></font></font></button>
 
 </form>
-
+<br><br><br>
 <a href="{% url 'products:product_detail' product.pk %}">이전으로</a>
 
 
