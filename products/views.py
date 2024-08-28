@@ -169,6 +169,8 @@ def product_list_by_category(request, category):
     # 모든 카테고리 가져오기
     categories = Product.objects.values_list('category', flat=True).distinct()
     
+    categories_list = ['Top', 'Bottom', 'Acc', 'Outer', 'Bag']
+    
     sort_by = request.GET.get('sort', 'created')
     
     # Top_products = Product.objects.filter(category='Top')
@@ -187,6 +189,7 @@ def product_list_by_category(request, category):
         'products': products,
         'categories': categories,
         'selected_category': category,
+        'categories_list':categories_list,
     }
 
     return render(request, 'products/product_list.html', context)

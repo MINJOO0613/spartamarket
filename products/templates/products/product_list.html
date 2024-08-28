@@ -69,7 +69,7 @@
   <li class="nav-item">
     <a class="nav-link {% if not selected_category %}active{% endif %}" href="{% url 'products:index' %}">ALL</a>
   </li>
-  {% for category in categories %}
+  {% for category in categories_list %}
   <li class="nav-item">
     <a class="nav-link {% if selected_category == category %}active{% endif %}" href="{% url 'products:product_list_by_category' category=category %}">{{ category }}</a>
   </li>
