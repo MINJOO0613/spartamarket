@@ -3,6 +3,7 @@ from django.conf import settings
 # from datetime import datetime, timedelta
 from django.utils import timezone
 # from django.db.models import F
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 # Create your models here.
 class Product(models.Model):
@@ -55,6 +56,9 @@ class Product(models.Model):
             return f'{second//60}분 전'
         else:
             return f'{second}초 전'
+        
+    def formatted_price(self):
+        return f"{intcomma(self.price)}"
 
     
 
