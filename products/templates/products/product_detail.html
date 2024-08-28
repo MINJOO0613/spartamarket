@@ -123,11 +123,11 @@
 
 
 <div class="p-5 bg-body-tertiary rounded-3">
-    {% if request.user.is_authenticated %}
     <br>
     <hr>
     <div>
         <h3>댓글 {{ comments|length }}개</h3><br>
+        {% if request.user.is_authenticated %}
         <form action="{% url "products:comment_create" product.pk %}" method="POST" class="d-flex align-items-center">
             {% csrf_token %}
             <div class="flex-grow-1">
