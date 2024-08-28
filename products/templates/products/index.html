@@ -114,6 +114,17 @@
   </div>
 </div>
 
+<br><br><br>
+<ul class="nav nav-underline justify-content-center">
+  <li class="nav-item">
+    <a class="nav-link {% if not selected_category %}active{% endif %}" href="{% url 'products:index' %}">ALL</a>
+  </li>
+  {% for category in categories %}
+  <li class="nav-item">
+    <a class="nav-link {% if selected_category == category %}active{% endif %}" href="{% url 'products:product_list_by_category' category=category %}">{{ category }}</a>
+  </li>
+  {% endfor %}
+</ul>
 
 <hr>
 <select onchange="location = this.value;">
@@ -134,7 +145,6 @@
     </a>
 </div>
 {% endif %}
-
 
 
 <br>
@@ -205,16 +215,7 @@
 </div>
 
 <hr>
-<ul class="nav nav-underline justify-content-center">
-  <li class="nav-item">
-    <a class="nav-link {% if not selected_category %}active{% endif %}" href="{% url 'products:index' %}">ALL</a>
-  </li>
-  {% for category in categories %}
-  <li class="nav-item">
-    <a class="nav-link {% if selected_category == category %}active{% endif %}" href="{% url 'products:product_list_by_category' category=category %}">{{ category }}</a>
-  </li>
-  {% endfor %}
-</ul>
+
 
 {% for category, products in categorized_products.items %}
   {% if products %}
