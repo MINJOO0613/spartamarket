@@ -4,14 +4,13 @@
 # SPARTAMARKET
 Welcome to Spartamarket! 
 
-Spartamarket is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and advanced search functionality.
+Spartamarket is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
 
 ## Features
 - **Accounts Management:** User registration, login, and account management.
-- **Product Management:** Write, delete and edit a product sales post, manage comments, Wishlist, and categories.
-- **User Profiles:** Follow users, manage profiles.
-- **Search Functionality:** Advanced search capabilities to find products efficiently.
-
+- **Product Management:** Write, delete, edit and read a product sales post, manage comments, show view counts, wishlist, and categories.
+- **User Profiles:** Follow users, manage profiles, show my product list and wishlist.
+- **Search Functionality:** Search capabilities to find products efficiently.
 
 
 ## Requirements
@@ -41,9 +40,6 @@ Spartamarket is a comprehensive e-commerce platform designed to handle user acco
 
 
 
-*Repository를 clone하고, 패키지 설치, 환경변수 설정, 실행하는 과정 필요
-
-
 ## Installation
 
 ```
@@ -53,6 +49,9 @@ cd spartamarket
 
 
 ## Install Dependencies
+```
+pip install -r requirements.txt
+```
 
 ## Run Migrations
 
@@ -67,17 +66,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-
-# SPARTAMARKET
-Welcome to Spartamarket! 
-
-Spartamarket is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and advanced search functionality.
-
-## Features
-- **Accounts Management:** User registration, login, and account management.
-- **Product Management:** Write, delete and edit a product sales post, manage comments, Wishlist, and categories.
-- **User Profiles:** Follow users, manage profiles.
-- **Search Functionality:** Advanced search capabilities to find products efficiently.
 
 
 ## File Structure
