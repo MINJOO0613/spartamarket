@@ -12,7 +12,7 @@ class ProductForm(forms.ModelForm):
     def clean_price(self):
         price = self.cleaned_data.get('price')
         if price < 0:
-            raise forms.ValidationError("0원 미만은 입력할 수 있습니다.")
+            raise forms.ValidationError("0원 미만은 입력할 수 없습니다.")
         return price
 
 
