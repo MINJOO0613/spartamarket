@@ -8,12 +8,10 @@
     <form action="{% url 'accounts:update' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-<<<<<<< HEAD
-        <button type="submit">회원 정보 수정</button>
-=======
+
         <br><br>
         <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>회원정보수정</strong></font></font></button>
->>>>>>> f89ff5c9b27cbe24614f74c06310577241e8dff5
+
     </form>
 
 {% endblock content %}
