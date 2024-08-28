@@ -120,39 +120,49 @@
     </div> <!-- end col -->
 </div>
 </div>
-<div class="p-5  bg-body-tertiary rounded-3">
+
+
+<div class="p-5 bg-body-tertiary rounded-3">
     {% if request.user.is_authenticated %}
     <br>
     <hr>
     <div>
-    <h3>댓글 {{ comments|length }}개</h3><br>
-    <form action="{% url "products:comment_create" product.pk %}" method="POST">
-        {% csrf_token %}
-        {{ comment_form.as_p }} <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><strong>입력</strong></font></font></button>
-        
-    </form>
+        <h3>댓글 {{ comments|length }}개</h3><br>
+        <form action="{% url "products:comment_create" product.pk %}" method="POST" class="d-flex align-items-center">
+            {% csrf_token %}
+            <div class="flex-grow-1">
+                {{ comment_form.as_p }}
+            </div>
+            <button class="btn btn-outline-secondary btn-sm ms-0" type="submit">
+                <strong>입력</strong>
+            </button>
+        </form>
     </div>
     {% endif %}
+
     <hr>
     {% for comment in comments %}
-    <ul>
-        <li><strong>{{ comment.user.username }} | </strong>{{ comment.content }} </li>
-    
-        {% if user == comment.user %}
-        <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST">
-            {% csrf_token %}
-            <button class="btn btn-outline-secondary" type="submit"><font style="vertical-align: inherit;"  onclick="return confirm('정말 삭제하시겠습니까?')"><font style="vertical-align: inherit;"><strong>삭제</strong></font></font></button>
-        </form>
-        {% endif %}
-        
+    <ul class="list-unstyled">
+        <li class="d-flex align-items-center mb-2 p-2 border rounded">
+            <strong class="me-2">{{ comment.user.username }} |</strong>
+            <span class="flex-grow-1">{{ comment.content }}</span>
+            
+            {% if user == comment.user %}
+            <form action="{% url "products:comment_delete" product.pk comment.pk %}" method="POST" class="d-inline">
+                {% csrf_token %}
+                <button class="btn btn-outline" type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">
+                    <strong>삭제</strong>
+                </button>
+            </form>
+            {% endif %}
+        </li>
     </ul>
-    
     {% empty %}
     <br><br>
     <p>댓글이 없습니다.</p>
-    
     {% endfor %}
-  </div>
+</div>
+
 
 
 

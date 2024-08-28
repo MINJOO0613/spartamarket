@@ -42,7 +42,6 @@ class Product(models.Model):
         second = time.seconds
         if day > 0:
             if day < 7:
-                print(day)
                 return f'{day}일 전'
             elif day < 30:
                 return f'{day//7}주 전'
