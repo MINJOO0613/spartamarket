@@ -6,6 +6,7 @@ Welcome to Spartamarket!
 
 Spartamarket is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
 
+
 ## Features
 - **Accounts Management:** User registration, login, and account management.
 - **Product Management:** Write, delete, edit and read a product sales post, manage comments, show view counts, wishlist, and categories.
@@ -40,215 +41,157 @@ Spartamarket is a comprehensive e-commerce platform designed to handle user acco
 
 
 
-## Installation
+## Getting started
+#### Installation
 
-```
+```python
 git clone https://github.com/MINJOO0613/spartamarket.git
 cd spartamarket
 ```
 
 
-## Install Dependencies
-```
+#### Install Dependencies
+```python
 pip install -r requirements.txt
 ```
 
-## Run Migrations
+#### Run Migrations
 
-```
+```python
 python manage.py makemigrations
 python manage.py migrate
 ```
 
 
-## Start the Servers
-```
+#### Start the Servers
+```python
 python manage.py runserver
 ```
 
 
-
-## File Structure
-
+## Project structure
+```
+📦 SPARTAMARKET
+├─ .gitignore
+├─ README.md
+├─ accounts
+│  ├─ __init__.py
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms.py
+│  ├─ migrations
+│  │  ├─ 0001_initial.py
+│  │  └─ __init__.py
+│  ├─ models.py
+│  ├─ templates
+│  │  └─ accounts
+│  │     ├─ change_password.html
+│  │     ├─ login.html
+│  │     ├─ signup.html
+│  │     └─ update.html
+│  ├─ tests.py
+│  ├─ urls.py
+│  └─ views.py
+├─ manage.py
+├─ products
+│  ├─ __init__.py
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms.py
+│  ├─ migrations
+│  │  ├─ 0001_initial.py
+│  │  └─ __init__.py
+│  ├─ models.py
+│  ├─ templates
+│  │  └─ products
+│  │     ├─ create.html
+│  │     ├─ index.html
+│  │     ├─ product_detail.html
+│  │     ├─ product_list.html
+│  │     └─ update.html
+│  ├─ tests.py
+│  ├─ urls.py
+│  └─ views.py
+├─ requirements.txt
+├─ search_app
+│  ├─ __init__.py
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ migrations
+│  │  └─ __init__.py
+│  ├─ models.py
+│  ├─ templates
+│  │  └─ search.html
+│  ├─ tests.py
+│  ├─ urls.py
+│  └─ views.py
+├─ spartamarket
+│  ├─ __init__.py
+│  ├─ asgi.py
+│  ├─ settings.py
+│  ├─ urls.py
+│  └─ wsgi.py
+├─ static
+│  └─ css
+│     ├─ 001.jpg
+│     ├─ 002.jpg
+│     ├─ 003.jpg
+│     ├─ 004.jpg
+│     ├─ 005.jpg
+│     ├─ 006.jpg
+│     ├─ BI_1.png
+│     ├─ BI_2.png
+│     ├─ BI_3.png
+│     ├─ BI_4.png
+│     └─ style.css
+├─ templates
+│  └─ base.html
+└─ users
+   ├─ __init__.py
+   ├─ admin.py
+   ├─ apps.py
+   ├─ forms.py
+   ├─ migrations
+   │  ├─ 0001_initial.py
+   │  └─ __init__.py
+   ├─ models.py
+   ├─ signals.py
+   ├─ templates
+   │  └─ users
+   │     ├─ edit_profile.html
+   │     └─ profile.html
+   ├─ tests.py
+   ├─ urls.py
+   └─ views.py
 
 ```
-📦SPARTAMARKET
- ┣ 📂accounts
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┣ 📜0001_initial.cpython-310.pyc
- ┃ ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┃ ┣ 📜0001_initial.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂accounts
- ┃ ┃ ┃ ┣ 📜change_password.html
- ┃ ┃ ┃ ┣ 📜login.html
- ┃ ┃ ┃ ┣ 📜signup.html
- ┃ ┃ ┃ ┗ 📜update.html
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ 📜admin.cpython-310.pyc
- ┃ ┃ ┣ 📜apps.cpython-310.pyc
- ┃ ┃ ┣ 📜forms.cpython-310.pyc
- ┃ ┃ ┣ 📜models.cpython-310.pyc
- ┃ ┃ ┣ 📜urls.cpython-310.pyc
- ┃ ┃ ┣ 📜views.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜forms.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┣ 📜views.py
- ┃ ┗ 📜__init__.py
- ┣ 📂products
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┣ 📜0001_initial.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0002_product_category_product_price.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0002_product_hits.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0002_product_product_views.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0002_product_seen_cnt.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0003_alter_product_price.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0003_remove_product_hits_product_views.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0003_remove_product_seen_cnt_product_product_views.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0004_alter_product_price.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0004_product_last_view_time.cpython-310.pyc
- ┃ ┃ ┃ ┣ 📜0005_remove_product_last_view_time_alter_product_views.cpython-310.pyc
- ┃ ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┃ ┣ 📜0001_initial.py
- ┃ ┃ ┣ 📜0002_product_hits.py
- ┃ ┃ ┣ 📜0003_remove_product_hits_product_views.py
- ┃ ┃ ┣ 📜0004_product_last_view_time.py
- ┃ ┃ ┣ 📜0005_remove_product_last_view_time_alter_product_views.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂tamplatetags
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂products
- ┃ ┃ ┃ ┣ 📜create.html
- ┃ ┃ ┃ ┣ 📜index.html
- ┃ ┃ ┃ ┣ 📜product_detail.html
- ┃ ┃ ┃ ┣ 📜product_list.html
- ┃ ┃ ┃ ┗ 📜update.html
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ 📜admin.cpython-310.pyc
- ┃ ┃ ┣ 📜apps.cpython-310.pyc
- ┃ ┃ ┣ 📜forms.cpython-310.pyc
- ┃ ┃ ┣ 📜models.cpython-310.pyc
- ┃ ┃ ┣ 📜urls.cpython-310.pyc
- ┃ ┃ ┣ 📜views.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜forms.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┣ 📜views.py
- ┃ ┗ 📜__init__.py
- ┣ 📂search_app
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📜search.html
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ 📜admin.cpython-310.pyc
- ┃ ┃ ┣ 📜apps.cpython-310.pyc
- ┃ ┃ ┣ 📜models.cpython-310.pyc
- ┃ ┃ ┣ 📜urls.cpython-310.pyc
- ┃ ┃ ┣ 📜views.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┣ 📜views.py
- ┃ ┗ 📜__init__.py
- ┣ 📂spartamarket
- ┃ ┣ 📂templates
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ 📜settings.cpython-310.pyc
- ┃ ┃ ┣ 📜urls.cpython-310.pyc
- ┃ ┃ ┣ 📜wsgi.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┣ 📜asgi.py
- ┃ ┣ 📜settings.py
- ┃ ┣ 📜urls.py
- ┃ ┣ 📜wsgi.py
- ┃ ┗ 📜__init__.py
- ┣ 📂static
- ┃ ┗ 📂css
- ┃ ┃ ┣ 📜001.jpg
- ┃ ┃ ┣ 📜002.jpg
- ┃ ┃ ┣ 📜003.jpg
- ┃ ┃ ┣ 📜004.jpg
- ┃ ┃ ┣ 📜005.jpg
- ┃ ┃ ┣ 📜006.jpg
- ┃ ┃ ┣ 📜BI_1.png
- ┃ ┃ ┣ 📜BI_2.png
- ┃ ┃ ┣ 📜BI_3.png
- ┃ ┃ ┣ 📜BI_4.png
- ┃ ┃ ┗ 📜style.css
- ┣ 📂templates
- ┃ ┗ 📜base.html
- ┣ 📂users
- ┃ ┣ 📂migrations
- ┃ ┃ ┣ 📂__pycache__
- ┃ ┃ ┃ ┣ 📜0001_initial.cpython-310.pyc
- ┃ ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┃ ┣ 📜0001_initial.py
- ┃ ┃ ┗ 📜__init__.py
- ┃ ┣ 📂templates
- ┃ ┃ ┗ 📂users
- ┃ ┃ ┃ ┣ 📜edit_profile.html
- ┃ ┃ ┃ ┗ 📜profile.html
- ┃ ┣ 📂__pycache__
- ┃ ┃ ┣ 📜admin.cpython-310.pyc
- ┃ ┃ ┣ 📜apps.cpython-310.pyc
- ┃ ┃ ┣ 📜forms.cpython-310.pyc
- ┃ ┃ ┣ 📜models.cpython-310.pyc
- ┃ ┃ ┣ 📜signals.cpython-310.pyc
- ┃ ┃ ┣ 📜urls.cpython-310.pyc
- ┃ ┃ ┣ 📜views.cpython-310.pyc
- ┃ ┃ ┗ 📜__init__.cpython-310.pyc
- ┃ ┣ 📜admin.py
- ┃ ┣ 📜apps.py
- ┃ ┣ 📜forms.py
- ┃ ┣ 📜models.py
- ┃ ┣ 📜signals.py
- ┃ ┣ 📜tests.py
- ┃ ┣ 📜urls.py
- ┃ ┣ 📜views.py
- ┃ ┗ 📜__init__.py
- ┃ ┣ 📂Scripts
- ┃ ┃ ┣ 📜activate
- ┃ ┃ ┣ 📜activate.bat
- ┃ ┃ ┣ 📜Activate.ps1
- ┃ ┃ ┣ 📜deactivate.bat
- ┃ ┃ ┣ 📜django-admin.exe
- ┃ ┃ ┣ 📜ipython.exe
- ┃ ┃ ┣ 📜ipython3.exe
- ┃ ┃ ┣ 📜pip.exe
- ┃ ┃ ┣ 📜pip3.10.exe
- ┃ ┃ ┣ 📜pip3.exe
- ┃ ┃ ┣ 📜pygmentize.exe
- ┃ ┃ ┣ 📜python.exe
- ┃ ┃ ┣ 📜pythonw.exe
- ┃ ┃ ┣ 📜sqlformat.exe
- ┃ ┃ ┣ 📜tree-cli-script.py
- ┃ ┃ ┗ 📜tree-cli.exe
- ┃ ┣ 📂share
- ┃ ┃ ┗ 📂man
- ┃ ┃ ┃ ┗ 📂man1
- ┃ ┃ ┃ ┃ ┗ 📜ipython.1
- ┃ ┗ 📜pyvenv.cfg
- ┣ 📜.gitignore
- ┣ 📜manage.py
- ┣ 📜README.md
- ┗ 📜requirements.txt
 
-```
+
+## ERD
+![image](https://github.com/user-attachments/assets/88f860d0-6127-4384-8b94-22fe6922762f)
+
+
+---
+
+## Role & Contribution
+* Backend (Web)
+  + 전체 아키텍처 구성 - 전 팀원
+  + 사용자 계정 기능 구현 - 김민주
+  + 사용자 프로필 구현 - 김민주
+  + 상품 정렬 기능 구현 - 주성현
+  + 카테고리 기능 구현 - 주성현
+  + 검색기능 구현 - 강다영
+  + 조회수 구현 - 강다영
+
+* Frontend (Web)
+  + 총총괄 - 김민주
+
+* etc
+  + 전체 개발 일정 및 이슈 관리 - 전 팀원
+
+
+## Developer
+강다영(HeureuseD)
+김민주(MINJOO0613)
+박건희(unseasol)
+주성현(Joonim97)
