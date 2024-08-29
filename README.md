@@ -6,6 +6,7 @@ Welcome to SPARTAMARKET!
 
 SPARTAMARKET is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
 
+&nbsp;
 
 ## Features
 - **Accounts Management:** User registration, login, and account management.
@@ -13,6 +14,7 @@ SPARTAMARKET is a comprehensive e-commerce platform designed to handle user acco
 - **User Profiles:** Follow users, manage profiles, show my product list and wishlist.
 - **Search Functionality:** Search capabilities to find products efficiently.
 
+&nbsp;
 
 ## Requirements
 - asgiref==3.8.1
@@ -40,6 +42,7 @@ SPARTAMARKET is a comprehensive e-commerce platform designed to handle user acco
 - wcwidth==0.2.13
 
 
+&nbsp;
 
 ## Getting started
 #### Installation
@@ -68,6 +71,8 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+&nbsp;
+&nbsp;
 
 ## Project structure
 ```
@@ -163,15 +168,16 @@ python manage.py runserver
    ├─ tests.py
    ├─ urls.py
    └─ views.py
-
 ```
 
+&nbsp;
 
 ## ERD
 ![image](https://github.com/user-attachments/assets/88f860d0-6127-4384-8b94-22fe6922762f)
 
-
----
+&nbsp;
+&nbsp;
+&nbsp;
 
 ## Role & Contribution
 * Backend (Web)
@@ -192,6 +198,7 @@ python manage.py runserver
 * etc
   + 전체 개발 일정 및 이슈 관리 - 전 팀원
 
+&nbsp;
 
 ## Developer
 - 강다영(HeureuseD)
