@@ -2,9 +2,9 @@
 
 
 # SPARTAMARKET
-Welcome to QUITE market! 
+Welcome to SPARTAMARKET! 
 
-QUITE market is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
+SPARTAMARKET is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
 
 
 ## Features
