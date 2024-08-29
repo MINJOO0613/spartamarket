@@ -6,6 +6,8 @@ Welcome to SPARTAMARKET!
 
 SPARTAMARKET is a comprehensive e-commerce platform designed to handle user accounts, product management, user interactions, and search functionality.
 
+In our SPARTAMARKET project, we've named the shopping site QUIET. The image above is the site's main logo.
+
 &nbsp;
 
 ## Features
