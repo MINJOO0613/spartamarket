@@ -194,7 +194,7 @@ python manage.py runserver
 
 
 ## Developer
- -강다영(HeureuseD)
+- 강다영(HeureuseD)
 - 김민주(MINJOO0613)
 - 박건희(unseasol)
 - 주성현(Joonim97)
